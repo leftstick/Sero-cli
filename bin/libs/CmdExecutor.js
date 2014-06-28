@@ -59,16 +59,16 @@ Executor.prototype.next = function() {
     var cp = spawn(cmd.cmd, cmd.args);
 
     cp.stdout.on('data', function(data) {
-        console.log('INFO: ' + data);
+        console.info(data);
     });
 
     cp.stderr.on('data', function(data) {
-        console.log('ERROR: ' + data);
+        console.error(data);
     });
 
     cp.on('close', function(code) {
         if (cmd.outself) {
-            console.log(cmd.cmd, cmd.args.join(' '));
+            console.info(cmd.cmd, cmd.args.join(' '));
         }
         d.resolve();
     });

@@ -2,8 +2,9 @@
 
 const inquirer = require('inquirer');
 const TaskManager = require('./libs/TaskManager');
-
 const taskMgr = new TaskManager();
+
+require('./libs/Print')();
 
 
 inquirer.prompt([{
@@ -14,20 +15,10 @@ inquirer.prompt([{
     choices: taskMgr.getTaskList()
 
 }], function(res) {
-    taskMgr.run(res.taskId);
+    taskMgr.run(res.taskId).then(function() {
+        var msg = 'Task [' + res.taskId + '] executed successfully!';
+        console.success(msg);
+    }, function(err) {
+        console.error(err);
+    });
 });
-
-// 'use strict';
-
-// process.title = 'AnGap-cli';
-
-// var basedir = process.cwd();
-
-// var cli = require('cli');
-
-// cli.setApp('./package.json');
-// cli.enable('version');
-
-// cli.parse(null, ['install', 'test', 'edit', 'remove', 'uninstall', 'ls']);
-
-// console.log('Command is: ' + cli.command);
