@@ -1,0 +1,50 @@
+{
+  "name": "AnGap-cli",
+  "description": "The PhoneGap based android application development tool",
+  "version": "1.0.0",
+  "homepage": "https://github.com/leftstick/AnGap-cli",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/leftstick/AnGap-cli"
+  },
+  "author": {
+    "name": "Howard.Zuo",
+    "email": "leftstick@qq.com",
+    "url": "http://leftstick.github.io/"
+  },
+  "tags": [
+    "scaffold",
+    "android",
+    "phonegap",
+    "angularjs",
+    "cli"
+  ],
+  "files": [
+    "index.js",
+    "lib",
+    "bin"
+  ],
+  "bin": {
+    "angap": "./bin/AnGap.js"
+  },
+  "dependencies": {
+    "cli": "^0.6.3",
+    "inquirer": "^0.5.1",
+    "lodash": "^2.4.1",
+    "q": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "engineStrict": true,
+  "engines": {
+    "node": ">= 0.9"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/leftstick/AnGap-cli/issues"
+  }
+}
