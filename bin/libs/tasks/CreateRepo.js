@@ -5,6 +5,8 @@ const _ = require('lodash');
 const Executor = require('../CmdExecutor');
 const path = require('path');
 const fs = require('fs');
+const gulp = require('gulp');
+const template = require('gulp-template');
 
 var options = {
     url: 'https://api.github.com/user/repos',
@@ -21,12 +23,13 @@ var options = {
     encoding: 'utf-8',
     body: {
         'name': '',
+        'description': '',
         'auto_init': true,
         'license_template': 'mit'
     }
 };
 
-var createRepo = function(opts, defer, repoName) {
+var createRepo = function(opts, defer, answer) {
 
     request(opts, function(err, incoming, response) {
         var res = JSON.parse(response);
@@ -42,14 +45,24 @@ var createRepo = function(opts, defer, repoName) {
             defer.reject(new Error(res.message));
             return;
         }
-        console.info('Repository [' + repoName + '] is created!');
+        console.info('Repository [' + answer.proName + '] is created!');
         var exec = new Executor([{
             cmd: 'git',
             args: ['clone', res.ssh_url]
         }]);
 
         exec.start().then(function() {
-            defer.resolve();
+
+            var scaffoldPath = path.join(__dirname, '../gapScaffold');
+
+            var stream = gulp.src(scaffoldPath + '/**/*')
+                .pipe(template(answer))
+                .pipe(gulp.dest(answer.localPath));
+
+            stream.on('close', defer.resolve);
+            stream.on('finish', defer.resolve);
+            stream.on('error', defer.reject);
+
         }, function(err) {
             defer.reject(err);
         });
@@ -59,8 +72,8 @@ var createRepo = function(opts, defer, repoName) {
 
 var Task = function() {
 
-    this._id = 'CreateRepo';
-    this._desc = 'Create repository on Github';
+    this._id = 'CreatePro';
+    this._desc = 'Create project on Github';
 };
 
 Task.prototype.start = function() {
@@ -80,26 +93,68 @@ Task.prototype.start = function() {
         }
     }, {
         type: 'input',
-        name: 'repoName',
-        message: 'Repository name to be created',
+        name: 'proName',
+        message: 'Project name to be created',
         validate: function(pass) {
             return !!pass;
+        }
+    }, {
+        type: 'input',
+        name: 'proDesc',
+        message: 'Project description',
+        validate: function(pass) {
+            return !!pass;
+        }
+    }, {
+        type: 'input',
+        name: 'proAuthor',
+        message: 'Project Author\'s name',
+        default: process.env.USERNAME,
+        validate: function(pass) {
+            return !!pass;
+        }
+    }, {
+        type: 'input',
+        name: 'proEmail',
+        message: 'Project Author\'s email',
+        validate: function(pass) {
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(pass);
+        }
+    }, {
+        type: 'input',
+        name: 'proWebsite',
+        message: 'Project Author\'s website',
+        validate: function(pass) {
+            return !!pass;
+        }
+    }, {
+        type: 'input',
+        name: 'widgetId',
+        message: 'Project\'s namespace',
+        default: 'com.example',
+        validate: function(pass) {
+            var re = /^[a-z]+([.][a-z]+)+$/;
+            return re.test(pass);
         }
     }], function(res) {
         var opts = _.clone(options);
         opts.auth.user = res.username;
         opts.auth.pass = res.password;
-        opts.body.name = res.repoName;
+        opts.body.name = res.proName;
+        opts.body.description = res.proDesc;
         opts.body = JSON.stringify(opts.body);
 
+        res.localPath = path.join('.', res.proName);
 
-        fs.exists(path.join('.', res.repoName), function(exists) {
+
+        fs.exists(res.localPath, function(exists) {
             if (exists) {
-                d.reject(new Error('The directory [' + res.repoName + '] is already exist.'));
+                d.reject(new Error('The directory [' + res.proName + '] is already exist.'));
                 return;
             }
 
-            createRepo(opts, d, res.repoName);
+            createRepo(opts, d, res);
 
         });
 

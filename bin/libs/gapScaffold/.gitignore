@@ -1,0 +1,15 @@
+# npm
+node_modules/
+
+# bower
+bower_components/
+www/js/libs/
+
+#phonegap
+platforms/
+src/
+
+# Generated files
+bin/
+gen/
+www/cordova.js
