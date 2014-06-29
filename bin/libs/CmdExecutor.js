@@ -73,6 +73,13 @@ Executor.prototype.next = function() {
         d.resolve();
     });
 
+    cp.on('exit', function(code) {
+        if (cmd.outself) {
+            console.info(cmd.cmd, cmd.args.join(' '));
+        }
+        d.resolve();
+    });
+
     cp.on('error', function(err) {
         d.reject(err);
     });

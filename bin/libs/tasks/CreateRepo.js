@@ -2,6 +2,9 @@ const Q = require('q');
 const inquirer = require('inquirer');
 const request = require('request');
 const _ = require('lodash');
+const Executor = require('../CmdExecutor');
+const path = require('path');
+const fs = require('fs');
 
 var options = {
     url: 'https://api.github.com/user/repos',
@@ -21,6 +24,37 @@ var options = {
         'auto_init': true,
         'license_template': 'mit'
     }
+};
+
+var createRepo = function(opts, defer, repoName) {
+
+    request(opts, function(err, incoming, response) {
+        var res = JSON.parse(response);
+        if (err) {
+            defer.reject(err);
+            return;
+        }
+        if (res.errors) {
+            defer.reject(new Error(res.errors[0].message));
+            return;
+        }
+        if (res.message) {
+            defer.reject(new Error(res.message));
+            return;
+        }
+        console.info('Repository [' + repoName + '] is created!');
+        var exec = new Executor([{
+            cmd: 'git',
+            args: ['clone', res.ssh_url]
+        }]);
+
+        exec.start().then(function() {
+            defer.resolve();
+        }, function(err) {
+            defer.reject(err);
+        });
+    });
+
 };
 
 var Task = function() {
@@ -58,23 +92,17 @@ Task.prototype.start = function() {
         opts.body.name = res.repoName;
         opts.body = JSON.stringify(opts.body);
 
-        request(opts, function(err, incoming, response) {
-            var res = JSON.parse(response);
-            if (err) {
-                d.reject(err);
+
+        fs.exists(path.join('.', res.repoName), function(exists) {
+            if (exists) {
+                d.reject(new Error('The directory [' + res.repoName + '] is already exist.'));
                 return;
             }
-            if (res.errors) {
-                d.reject(new Error(res.errors[0].message));
-                return;
-            }
-            if (res.message) {
-                d.reject(new Error(res.message));
-                return;
-            }
-            console.info('Repository [' + res.repoName + '] is created!');
-            d.resolve();
+
+            createRepo(opts, d, res.repoName);
+
         });
+
     });
 
     return d.promise;
