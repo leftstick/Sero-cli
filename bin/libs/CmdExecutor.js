@@ -25,6 +25,7 @@ var Executor = function(cmds, variables) {
             c.cmd = cmd.cmd;
             c.args = [];
             c.outself = cmd.outself;
+            c.outFilter = cmd.outFilter;
 
             _.each(cmd.args, varHandler, c.args);
 
@@ -59,11 +60,35 @@ Executor.prototype.next = function() {
     var cp = spawn(cmd.cmd, cmd.args);
 
     cp.stdout.on('data', function(data) {
-        console.info(data);
+        var d = data;
+        if (typeof data !== 'string') {
+            d = data.toString('utf8');
+        }
+        if (!cmd.outFilter) {
+            console.info(d);
+            return;
+        }
+
+        if (!cmd.outFilter(d)) {
+            return;
+        }
+        console.info(d);
     });
 
     cp.stderr.on('data', function(data) {
-        console.error(data);
+        var d = data;
+        if (typeof data !== 'string') {
+            d = data.toString('utf8');
+        }
+        if (!cmd.outFilter) {
+            console.info(d);
+            return;
+        }
+
+        if (!cmd.outFilter(d)) {
+            return;
+        }
+        console.info(d);
     });
 
     cp.on('close', function(code) {
