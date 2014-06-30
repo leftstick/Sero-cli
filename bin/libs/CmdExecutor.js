@@ -1,10 +1,9 @@
 const Q = require('q');
-const spawn = require('child_process').spawn;
+const exec = require('child_process').exec;
 const _ = require('lodash');
 
 
 var Executor = function(cmds, variables) {
-    var source = cmds.slice();
     this.commands = cmds.slice();
 
     if (!_.isArray(this.commands)) {
@@ -13,25 +12,11 @@ var Executor = function(cmds, variables) {
 
     if (variables) {
         this.commands = [];
-        var cmd;
-        var c;
-        var varHandler = function(arg) {
-            this.push(_.template(arg, variables));
-        };
-        while (source.length > 0) {
-            cmd = source.shift();
-
-            c = {};
-            c.cmd = cmd.cmd;
-            c.args = [];
-            c.outself = cmd.outself;
-            c.outFilter = cmd.outFilter;
-
-            _.each(cmd.args, varHandler, c.args);
-
-            this.commands.push(c);
-        }
+        _.each(cmds, function(cmd) {
+            this.push(_.template(cmd, variables));
+        }, this.commands);
     }
+
     this._run = function(defer) {
         var _this = this;
         if (!this.hasNext()) {
@@ -57,57 +42,24 @@ Executor.prototype.next = function() {
     var cmd = this.commands.shift();
     var d = Q.defer();
 
-    var cp = spawn(cmd.cmd, cmd.args);
-
-    cp.stdout.on('data', function(data) {
-        var d = data;
-        if (typeof data !== 'string') {
-            d = data.toString('utf8');
-        }
-        if (!cmd.outFilter) {
-            console.info(d);
+    var cp = exec(cmd, {
+        maxBuffer: 5000 * 1024
+    }, function(error, stdout, stderr) {
+        if (error) {
+            d.reject(error);
             return;
         }
 
-        if (!cmd.outFilter(d)) {
-            return;
-        }
-        console.info(d);
-    });
-
-    cp.stderr.on('data', function(data) {
-        var d = data;
-        if (typeof data !== 'string') {
-            d = data.toString('utf8');
-        }
-        if (!cmd.outFilter) {
-            console.info(d);
-            return;
-        }
-
-        if (!cmd.outFilter(d)) {
-            return;
-        }
-        console.info(d);
-    });
-
-    cp.on('close', function(code) {
-        if (cmd.outself) {
-            console.info(cmd.cmd, cmd.args.join(' '));
+        if (!stdout) {
+            console.info(cmd);
+        } else {
+            console.log(stdout);
         }
         d.resolve();
     });
 
-    cp.on('exit', function(code) {
-        if (cmd.outself) {
-            console.info(cmd.cmd, cmd.args.join(' '));
-        }
-        d.resolve();
-    });
-
-    cp.on('error', function(err) {
-        d.reject(err);
-    });
+    cp.stdout.pipe(process.stdout);
+    cp.stderr.pipe(process.stderr);
 
     return d.promise;
 };

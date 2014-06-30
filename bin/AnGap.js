@@ -20,5 +20,6 @@ inquirer.prompt([{
         console.success(msg);
     }, function(err) {
         console.error(err);
+        console.error('Task [' + res.taskId + '] failed!');
     });
 });

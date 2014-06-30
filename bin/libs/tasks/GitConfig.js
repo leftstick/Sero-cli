@@ -3,55 +3,19 @@ const inquirer = require('inquirer');
 const _ = require('lodash');
 const Executor = require('../CmdExecutor');
 
-const configs = [{
-    cmd: 'git',
-    args: ['config', '--local', 'user.name', '<%= username %>'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'user.email', '<%= useremail %>'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'core.excludesfile', '$HOME/.gitignore'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'core.autocrlf', 'input'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'color.ui', 'true'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'gui.encoding', 'utf-8'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'push.default', 'tracking'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'branch.autosetupmerge', 'always'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'branch.autosetuprebase', 'always'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'alias.co', 'checkout'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'alias.st', 'status'],
-    outself: true
-}, {
-    cmd: 'git',
-    args: ['config', '--local', 'alias.br', 'branch'],
-    outself: true
-}];
+const configs = [
+    'git config --local user.name <%= username %>',
+    'git config --local user.email <%= useremail %>',
+    'git config --local core.excludesfile $HOME/.gitignore',
+    'git config --local core.autocrlf input',
+    'git config --local color.ui true',
+    'git config --local gui.encoding utf-8',
+    'git config --local push.default tracking',
+    'git config --local branch.autosetupmerge always',
+    'git config --local branch.autosetuprebase always',
+    'git config --local alias.co checkout',
+    'git config --local alias.st status',
+    'git config --local alias.br branch'];
 
 var Task = function() {
 
@@ -63,19 +27,19 @@ Task.prototype.start = function() {
     var d = Q.defer();
 
     inquirer.prompt([{
-        type: 'input',
-        name: 'username',
-        message: 'username:',
-        default: process.env.USERNAME
-    }, {
-        type: 'input',
-        name: 'useremail',
-        message: 'useremail:',
-        validate: function(pass) {
-            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(pass);
-        }
-    }], function(res) {
+            type: 'input',
+            name: 'username',
+            message: 'username:',
+            default: process.env.USERNAME
+        }, {
+            type: 'input',
+            name: 'useremail',
+            message: 'useremail:',
+            validate: function(pass) {
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(pass);
+            }
+        }], function(res) {
 
         var exec = new Executor(configs, res);
 
