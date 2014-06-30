@@ -12,7 +12,7 @@ AnGap-cli provides a friendly interactive interface to help developers start dev
 > [Mobile Angular UI](http://mobileangularui.com/) is chosen as UI components <br/>
 > [Requirejs](http://www.requirejs.org/) is chosen as dependency management framework<br/>
 
-**AnGap-cli includes:**
+## Tasks ##
 
 - [Create project on Github](./docs/task_createRepo.md)
 - [Configure git options for current working directory](./docs/task_gitconfig.md)
