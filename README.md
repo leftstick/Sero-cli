@@ -1,7 +1,7 @@
 AnGap-cli
 =========
 
-![](http://img.shields.io/badge/npm-v1.4.14-green.svg?style=flat)  ![](http://img.shields.io/badge/dependencies-latest-yellowgreen.svg?style=flat)
+![](http://img.shields.io/badge/npm_module-v1.0.0-green.svg?style=flat)  ![](http://img.shields.io/badge/dependencies-latest-yellowgreen.svg?style=flat)
 ![](http://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)
 
 > The android application development system

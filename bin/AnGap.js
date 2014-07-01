@@ -8,10 +8,10 @@ require('./libs/Print')();
 
 
 inquirer.prompt([{
-        type: 'list',
+        type: 'rawlist',
         name: 'taskId',
         message: 'Select a task and hit Enter to begin \n ────────────────────────────────────────',
-        default: taskMgr.getTaskList[0],
+        default: taskMgr.getTaskList()[0],
         choices: taskMgr.getTaskList()
     }], function(res) {
     taskMgr.run(res.taskId).then(function() {

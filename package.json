@@ -28,9 +28,12 @@
     "angap": "./bin/AnGap.js"
   },
   "dependencies": {
-    "cli": "^0.6.3",
     "colors": "^0.6.2",
+    "event-stream": "^3.1.5",
     "gulp": "^3.8.5",
+    "gulp-clean": "^0.3.1",
+    "gulp-connect": "^2.0.5",
+    "gulp-rename": "^1.2.0",
     "gulp-template": "^0.1.1",
     "inquirer": "^0.5.1",
     "lodash": "^2.4.1",
