@@ -16,5 +16,10 @@
     "jquery": "~2.1.1",
     "requirejs": "~2.1.14",
     "lodash": "~2.4.1"
+  },
+  "dependencyDefine": {
+    "jquery": "jquery/dist/jquery.min.js",
+    "requirejs": "requirejs/require.js",
+    "lodash": "lodash/dist/lodash.min.js"
   }
 }

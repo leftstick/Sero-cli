@@ -21,7 +21,7 @@ module.exports = function() {
 
     console.warn = function() {
         var args = Array.prototype.slice.call(arguments, 0);
-        console.log(args.join(' ').warn);
+        console.log(args.join(' ').replace('Error:', 'Warn:').warn);
     };
 
     console.error = function() {

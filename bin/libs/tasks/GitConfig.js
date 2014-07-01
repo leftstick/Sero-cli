@@ -1,6 +1,7 @@
 const Q = require('q');
 const inquirer = require('inquirer');
 const _ = require('lodash');
+const fs = require('fs');
 const Executor = require('../CmdExecutor');
 
 const configs = [
@@ -26,30 +27,45 @@ var Task = function() {
 Task.prototype.start = function() {
     var d = Q.defer();
 
-    inquirer.prompt([{
-            type: 'input',
-            name: 'username',
-            message: 'username:',
-            default: process.env.USERNAME
-        }, {
-            type: 'input',
-            name: 'useremail',
-            message: 'useremail:',
-            validate: function(pass) {
-                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(pass);
-            }
-        }], function(res) {
+    fs.stat('.git', function(err, stats) {
+        var error = new Error('The working directory must be a valid git project.');
+        error.isWarning = true;
+        if (err) {
+            d.reject(error);
+            return;
+        }
+        if (!stats.isDirectory()) {
+            d.reject(error);
+            return;
+        }
 
-        var exec = new Executor(configs, res);
+        inquirer.prompt([{
+                type: 'input',
+                name: 'username',
+                message: 'username:',
+                default: process.env.USERNAME
+            }, {
+                type: 'input',
+                name: 'useremail',
+                message: 'useremail:',
+                validate: function(pass) {
+                    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(pass);
+                }
+            }], function(res) {
 
-        exec.start().then(function() {
-            d.resolve();
-        }, function(err) {
-            d.reject(err);
+            var exec = new Executor(configs, res);
+
+            exec.start().then(function() {
+                d.resolve();
+            }, function(err) {
+                d.reject(err);
+            });
+
         });
-
     });
+
+
 
     return d.promise;
 };
