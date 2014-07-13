@@ -28,6 +28,7 @@
     "angap": "./bin/AnGap.js"
   },
   "dependencies": {
+    "chalk": "^0.5.1",
     "colors": "^0.6.2",
     "event-stream": "^3.1.5",
     "gulp": "^3.8.5",
@@ -38,7 +39,8 @@
     "inquirer": "^0.5.1",
     "lodash": "^2.4.1",
     "q": "^1.0.1",
-    "request": "^2.36.0"
+    "request": "^2.36.0",
+    "terminal-menu": "^0.3.2"
   },
   "devDependencies": {},
   "scripts": {},
