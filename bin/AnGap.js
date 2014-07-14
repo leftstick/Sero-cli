@@ -2,12 +2,13 @@
 
 'use strict';
 
+var _ = require('lodash');
 var createMenu = require('terminal-menu');
 var EventEmitter = require('events').EventEmitter;
 var chalk = require('chalk');
 
-var UT = require('./libs/Utils');
-var utils = new UT();
+var TaskManager = require('./libs/TaskManager');
+var utils = require('./libs/Utils');
 
 
 var title = 'ANGAP SAVE YOU FROM COMPLICATED DEVELOPMENT WORKS';
@@ -15,6 +16,8 @@ var subtitle = 'Select an task and hit Enter to begin';
 
 var defaultWith = 100;
 
+
+var taskMgr = new TaskManager();
 
 var emitter = new EventEmitter();
 var menu = createMenu({
@@ -32,18 +35,13 @@ menu.write(chalk.italic(subtitle) + '\n');
 //display start separator
 menu.write(utils.repeat('-', defaultWith) + '\n');
 
-// opts.exercises.forEach(function(name) {
-//     var isDone = opts.completed.indexOf(name) >= 0,
-//         m = '[COMPLETED]'
-
-//     name = name
-
-//     if (isDone) {
-//         menu.add(chalk.bold('»') + ' ' + name + util.repeat(' ', opts.width - m.length - name.length - 2) + m)
-//     } else {
-//         menu.add(chalk.bold('»') + ' ' + name + util.repeat(' ', opts.width - name.length - 2))
-//     }
-// })
+_.each(taskMgr.getTaskList(), function(task){
+    menu.add(chalk.bold('»') + ' ' + task.getName() + utils.repeat(' ', defaultWith - task.getName().length - 1), function(){
+        taskMgr.run(task.getId()).on('finish', function(){
+            console.log('finish ed asdfasdfadf');
+        });
+    });
+});
 
 //display end separator
 menu.write(utils.repeat('-', defaultWith) + '\n');

@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "chalk": "^0.5.1",
+    "class-extend": "^0.1.1",
     "colors": "^0.6.2",
     "event-stream": "^3.1.5",
     "gulp": "^3.8.5",

@@ -1,40 +1,52 @@
-const _ = require('lodash');
-const fs = require('fs');
-const path = require('path');
+var _ = require('lodash');
+var fs = require('fs');
+var EventEmitter = require('events').EventEmitter;
+var utils = require('./Utils');
+
+var finishHandler = function(err) {
+    var args = Array.prototype.slice.call(arguments, 1);
+
+    if (!err) {
+        args.unshift('finish');
+    } else {
+        args.unshift('error');
+    }
+    EventEmitter.prototype.emit.apply(this.emitter, args);
+};
 
 var TaskManager = function() {
 
-    var _taskFiles = fs.readdirSync(path.join(__dirname, './tasks'));
+    var _taskFiles = fs.readdirSync(utils.taskDir);
 
     this._tasks = _.map(_taskFiles, function(file) {
-        var moduleName = file.substring(0, file.indexOf('.js'));
-        var Task = require('./tasks/' + moduleName);
+        var Task = require(utils.taskDir + '/' + file + '/Task');
         return new Task();
     });
 
-    this._taskArr = _.map(this._tasks, function(task) {
-        return {
-            name: task.getDesc(),
-            value: task.getID()
-        };
+    this._tasks = _.sortBy(this._tasks, function(task) {
+        return task.getPriority();
     });
+
+    this.emitter = new EventEmitter();
 
 };
 
 TaskManager.prototype.getTaskList = function() {
-    return this._taskArr;
+    return this._tasks;
 };
 
 TaskManager.prototype.run = function(taskId) {
     var task = _.find(this._tasks, function(task) {
-        return task.getID() === taskId;
+        return task.getId() === taskId;
     });
 
     if (!task) {
         throw new Error('Task [' + taskId + '] is not valid.');
     }
 
-    return task.start(); //start has to be a promise
+    task.run(finishHandler.bind(this));
+
+    return this.emitter;
 };
 
 module.exports = TaskManager;
