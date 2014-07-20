@@ -1,6 +1,8 @@
 var path = require('path');
 var chalk = require('chalk');
 var os = require('os');
+var colorsTmpl = require('colors-tmpl');
+var fs = require('fs');
 
 var binDir = path.join(__dirname, '../', '../', 'bin');
 var isWin = os.platform().indexOf('win') > -1;
@@ -9,12 +11,14 @@ var Utils = {
     binDir: binDir,
     taskDir: path.join(binDir, 'tasks'),
     isWindows: isWin,
-    separator: isWin ? '\\' : ' / ',
-    dirFromName: function (name) {
-        return path.join(this.taskDir, this.idFromName(name));
+    separator: isWin ? '\\' : '/',
+    joinBinPath: function (filePath) {
+        var p = filePath.replace(/\//g, this.separator);
+        return path.join(binDir, p);
     },
-    idFromName: function (id) {
-        return id.toLowerCase().replace(/\s/g, '_').replace(/[^\w]/gi, '');
+    joinWorkingPath: function (filePath) {
+        var p = filePath.replace(/\//g, this.separator);
+        return path.join('.', p);
     },
     repeat: function (ch, sz) {
         return new Array(sz + 1).join(ch);
@@ -43,6 +47,21 @@ var Utils = {
             var args = Array.prototype.slice.call(arguments);
             console.log(chalk.red.apply(undefined, args));
         }
+    },
+    printFile: function (filePath) {
+        var contents;
+        try {
+            contents = fs.readFileSync(this.convertPath(filePath), {
+                encoding: 'utf8'
+            });
+
+            contents = colorsTmpl(contents);
+
+            console.log(contents);
+        } catch (e) {
+            throw e;
+        }
+
     }
 };
 

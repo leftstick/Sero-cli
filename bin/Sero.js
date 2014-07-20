@@ -4,7 +4,6 @@
 
 var _ = require('lodash');
 var createMenu = require('terminal-menu');
-var EventEmitter = require('events').EventEmitter;
 var chalk = require('chalk');
 
 var TaskManager = require('./libs/TaskManager');
@@ -18,9 +17,13 @@ var subtitle = 'Select an task and hit Enter to begin';
 var defaultWith = 100;
 
 
+var exit = function (code) {
+    process.exit(code);
+};
+
+
 var taskMgr = new TaskManager();
 
-var emitter = new EventEmitter();
 var menu = createMenu({
     width: defaultWith,
     x: 3,
@@ -43,6 +46,8 @@ taskMgr.getTaskList().forEach(function (task, index, tasklist) {
 
 //display end separator
 menu.write(utils.repeat('-', defaultWith) + '\n');
+//display usage
+menu.add(chalk.bold('USAGE'));
 //display help
 menu.add(chalk.bold('HELP'));
 //display exit
@@ -50,19 +55,25 @@ menu.add(chalk.bold('EXIT'));
 
 menu.on('select', function (label, index) {
     var name = chalk.stripColor(label).replace(/(^»?\s+)/g, '');
+
     menu.y = 0;
     menu.reset();
     menu.close();
 
     if (name === 'EXIT') {
-        emitter.emit('exit');
-        process.exit(0);
+        exit(0);
         return;
     }
 
     if (name === 'HELP') {
-        emitter.emit('help');
-        process.exit(0);
+        utils.printFile(utils.joinBinPath('help.txt'));
+        exit(0);
+        return;
+    }
+
+    if (name === 'USAGE') {
+        utils.printFile(utils.joinBinPath('usage.txt'));
+        exit(0);
         return;
     }
 
@@ -72,10 +83,12 @@ menu.on('select', function (label, index) {
 
     runner.on('finish', function () {
         logger.success('finish: ', task.name);
+        exit(0);
     });
 
     runner.on('error', function (err) {
         logger.error('failed: ', err);
+        exit(0);
     });
 
 });

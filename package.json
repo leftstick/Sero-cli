@@ -1,11 +1,11 @@
 {
-  "name": "AnGap-cli",
+  "name": "Sero-cli",
   "description": "The PhoneGap based android application development tool",
   "version": "1.0.0",
-  "homepage": "https://github.com/leftstick/AnGap-cli",
+  "homepage": "https://github.com/leftstick/Sero-cli",
   "repository": {
     "type": "git",
-    "url": "git://github.com/leftstick/AnGap-cli"
+    "url": "git://github.com/leftstick/Sero-cli"
   },
   "author": {
     "name": "Howard.Zuo",
@@ -13,10 +13,8 @@
     "url": "http://leftstick.github.io/"
   },
   "tags": [
-    "scaffold",
-    "android",
-    "phonegap",
-    "angularjs",
+    "web",
+    "toolkit",
     "cli"
   ],
   "files": [
@@ -25,12 +23,12 @@
     "bin"
   ],
   "bin": {
-    "angap": "./bin/AnGap.js"
+    "sero": "./bin/Sero.js"
   },
   "dependencies": {
     "chalk": "^0.5.1",
     "class-extend": "^0.1.1",
-    "colors": "^0.6.2",
+    "colors-tmpl": "^0.1.0",
     "event-stream": "^3.1.5",
     "gulp": "^3.8.5",
     "gulp-clean": "^0.3.1",
@@ -49,12 +47,10 @@
   "engines": {
     "node": ">= 0.9"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
+  "licenses": [{
+    "type": "MIT"
+  }],
   "bugs": {
-    "url": "https://github.com/leftstick/AnGap-cli/issues"
+    "url": "https://github.com/leftstick/Sero-cli/issues"
   }
 }

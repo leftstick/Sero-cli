@@ -21,7 +21,7 @@ var TaskManager = function () {
     var _taskFiles = fs.readdirSync(utils.taskDir);
 
     this._tasks = _taskFiles.map(function (file, index, files) {
-        var path = utils.taskDir + utils.separator + file + utils.separator + 'Task';
+        var path = utils.joinBinPath('tasks/' + file + '/Task');
         var Task = require(path);
         return new Task(path);
     });
