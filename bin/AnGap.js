@@ -9,6 +9,7 @@ var chalk = require('chalk');
 
 var TaskManager = require('./libs/TaskManager');
 var utils = require('./libs/Utils');
+var logger = utils.logger;
 
 
 var title = 'ANGAP SAVE YOU FROM COMPLICATED DEVELOPMENT WORKS';
@@ -35,12 +36,9 @@ menu.write(chalk.italic(subtitle) + '\n');
 //display start separator
 menu.write(utils.repeat('-', defaultWith) + '\n');
 
-_.each(taskMgr.getTaskList(), function(task){
-    menu.add(chalk.bold('»') + ' ' + task.getName() + utils.repeat(' ', defaultWith - task.getName().length - 1), function(){
-        taskMgr.run(task.getId()).on('finish', function(){
-            console.log('finish ed asdfasdfadf');
-        });
-    });
+
+taskMgr.getTaskList().forEach(function (task, index, tasklist) {
+    menu.add(chalk.bold('»') + ' ' + task.name + utils.repeat(' ', defaultWith - task.name.length - 1));
 });
 
 //display end separator
@@ -50,7 +48,7 @@ menu.add(chalk.bold('HELP'));
 //display exit
 menu.add(chalk.bold('EXIT'));
 
-menu.on('select', function(label) {
+menu.on('select', function (label, index) {
     var name = chalk.stripColor(label).replace(/(^»?\s+)/g, '');
     menu.y = 0;
     menu.reset();
@@ -58,15 +56,28 @@ menu.on('select', function(label) {
 
     if (name === 'EXIT') {
         emitter.emit('exit');
-        menu.close();
         process.exit(0);
+        return;
     }
 
     if (name === 'HELP') {
-        return emitter.emit('help');
+        emitter.emit('help');
+        process.exit(0);
+        return;
     }
 
-    emitter.emit('select', name);
+    var task = taskMgr.getTaskByIndex(index);
+
+    var runner = taskMgr.run(task.id);
+
+    runner.on('finish', function () {
+        logger.success('finish: ', task.name);
+    });
+
+    runner.on('error', function (err) {
+        logger.error('failed: ', err);
+    });
+
 });
 
 menu.createStream().pipe(process.stdout);
