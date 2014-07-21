@@ -18,6 +18,20 @@ Following technologies are recommended to know before starting use it.
 > [NPM](http://www.npmjs.org/) is the official package manager for `Node.js`<br/> 
 > [bower](http://bower.io/) works by fetching and installing packages from all over, taking care of hunting, finding, downloading, and saving the stuff you’re looking for<br/>
 
+## Installation ##
+
+```shell
+npm install sero-cli -g
+```
+
+## Usage ##
+
+Move to whatever the location you want to work in. 
+
+```shell
+sero
+```
+
 ## Available Tasks ##
 
 - [Configure git options for current working directory](./docs/task_gitconf.md)
@@ -25,8 +39,6 @@ Following technologies are recommended to know before starting use it.
 - [Install bower dependencies](./docs/task_installbower.md)
 - [Start a static web server for current working directory](./docs/task_startwebserver.md)
 - [Create a brand new repository on Github](./docs/task_createrepo.md)
-
-
 
 ## LICENSE ##
 
