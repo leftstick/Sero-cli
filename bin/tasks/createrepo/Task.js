@@ -34,58 +34,33 @@ var options = {
 var Task = BaseTask.extend({
     id: 'CreateGitRepo',
     name: 'Create a brand new repository on Github',
-    priority: 4,
-    run: function (cons) {
+    priority: 5,
+    run: function(cons) {
 
         inquirer.prompt([{
-            type: 'input',
-            name: 'username',
-            message: 'Username or Email for Github',
-            default: process.env.USERNAME
-        }, {
-            type: 'password',
-            name: 'password',
-            message: 'Password for Github',
-            validate: function (pass) {
-                return !!pass;
-            }
-        }, {
-            type: 'input',
-            name: 'proName',
-            message: 'Project name to be created',
-            validate: function (pass) {
-                return !!pass;
-            }
-        }, {
-            type: 'input',
-            name: 'proDesc',
-            message: 'Project description'
-        }, {
-            type: 'input',
-            name: 'proAuthor',
-            message: 'Project Author\'s name',
-            default: function (answer) {
-                if (!MAIL_REG.test(answer.username)) {
-                    return answer.username;
+                type: 'input',
+                name: 'username',
+                message: 'Username or Email for Github',
+                default: process.env.USERNAME
+            }, {
+                type: 'password',
+                name: 'password',
+                message: 'Password for Github',
+                validate: function(pass) {
+                    return !!pass;
                 }
-                return answer.username.substring(0, answer.username.indexOf('@'));
-            },
-            validate: function (pass) {
-                return !!pass;
-            }
-        }, {
-            type: 'input',
-            name: 'proEmail',
-            message: 'Project Author\'s email',
-            default: function (answer) {
-                if (MAIL_REG.test(answer.username)) {
-                    return answer.username;
+            }, {
+                type: 'input',
+                name: 'proName',
+                message: 'Project name to be created',
+                validate: function(pass) {
+                    return !!pass;
                 }
-            },
-            validate: function (pass) {
-                return MAIL_REG.test(pass);
-            }
-        }], function (answer) {
+            }, {
+                type: 'input',
+                name: 'proDesc',
+                message: 'Project description'
+            }], function(answer) {
             options.auth.user = answer.username;
             options.auth.pass = answer.password;
             options.body.name = answer.proName;
@@ -95,13 +70,13 @@ var Task = BaseTask.extend({
             answer.localPath = utils.joinWorkingPath(answer.proName);
 
 
-            fs.exists(answer.localPath, function (exists) {
+            fs.exists(answer.localPath, function(exists) {
                 if (exists) {
                     cons('The directory [' + answer.proName + '] is already exist.');
                     return;
                 }
 
-                request(options, function (err, incoming, response) {
+                request(options, function(err, incoming, response) {
                     var res = JSON.parse(response);
                     if (err) {
                         cons(err);
@@ -119,10 +94,10 @@ var Task = BaseTask.extend({
 
                     var exec = new Executor(['git clone ' + res.ssh_url]);
 
-                    exec.start().then(function () {
+                    exec.start().then(function() {
                         cons();
                         return;
-                    }, function (err) {
+                    }, function(err) {
                         cons(err);
                         return;
                     });

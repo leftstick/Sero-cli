@@ -83,7 +83,6 @@ menu.on('select', function (label, index) {
 
     runner.on('finish', function () {
         logger.success('finish: ', task.name);
-        exit(0);
     });
 
     runner.on('error', function (err) {

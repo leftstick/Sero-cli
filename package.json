@@ -1,6 +1,6 @@
 {
   "name": "Sero-cli",
-  "description": "The PhoneGap based android application development tool",
+  "description": "The toolkit helps developers easily start with web development work",
   "version": "1.0.0",
   "homepage": "https://github.com/leftstick/Sero-cli",
   "repository": {
@@ -30,11 +30,8 @@
     "class-extend": "^0.1.1",
     "colors-tmpl": "^0.1.0",
     "event-stream": "^3.1.5",
-    "gulp": "^3.8.5",
-    "gulp-clean": "^0.3.1",
-    "gulp-connect": "^2.0.5",
-    "gulp-rename": "^1.2.0",
-    "gulp-template": "^0.1.1",
+    "gulp": "^3.8.6",
+    "gulp-webserver": "^0.4.0",
     "inquirer": "^0.5.1",
     "lodash": "^2.4.1",
     "q": "^1.0.1",
@@ -47,9 +44,11 @@
   "engines": {
     "node": ">= 0.9"
   },
-  "licenses": [{
-    "type": "MIT"
-  }],
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/leftstick/Sero-cli/issues"
   }

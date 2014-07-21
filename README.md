@@ -1,22 +1,33 @@
-AnGap-cli
+Sero-cli
 =========
 
 ![](http://img.shields.io/badge/npm_module-v1.0.0-green.svg?style=flat)  ![](http://img.shields.io/badge/dependencies-latest-yellowgreen.svg?style=flat)
 ![](http://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)
 
-> The android application development system
+> The web application development toolkit
 
 
-AnGap-cli provides a friendly interactive interface to help developers start developing android application based on standard web technology. All you need to know is the usage of some popular frameworks as following. <br/>
-> [AngularJs](http://www.angularjs.org/) is chosen as mobile development base framework<br/>
-> [Mobile Angular UI](http://mobileangularui.com/) is chosen as UI components <br/>
-> [Requirejs](http://www.requirejs.org/) is chosen as dependency management framework<br/>
+![](https://raw.githubusercontent.com/leftstick/Sero-cli/master/docs/img/example.png)
 
-## Tasks ##
+Sero-cli provides a friendly interactive interface to help developers start developing web application on `Github`. All you need to do is pressing [KEY_UP]/[KEY_DOWN] to navigate the specific task you'd like to execute.
 
-- [Create project on Github](./docs/task_createRepo.md)
-- [Configure git options for current working directory](./docs/task_gitconfig.md)
-- [Install PhoneGap globally with version](./docs/task_installPhoneGap.md)
+## Background knowledge ##
+Following technologies are recommended to know before starting use it.
+
+> [Nodejs](http://www.nodejs.org/) is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications<br/>
+> [NPM](http://www.npmjs.org/) is the official package manager for `Node.js`<br/> 
+> [bower](http://bower.io/) works by fetching and installing packages from all over, taking care of hunting, finding, downloading, and saving the stuff you’re looking for<br/>
+
+## Available Tasks ##
+
+- [Configure git options for current working directory](./docs/task_gitconf.md)
+- [Install npm dependencies](./docs/task_installnpm.md)
+- [Install bower dependencies](./docs/task_installbower.md)
+- [Start a static web server for current working directory](./docs/task_startwebserver.md)
+- [Create a brand new repository on Github](./docs/task_createrepo.md)
 
 
 
+## LICENSE ##
+
+[MIT License](http://en.wikipedia.org/wiki/MIT_License)
