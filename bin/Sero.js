@@ -46,8 +46,6 @@ taskMgr.getTaskList().forEach(function (task, index, tasklist) {
 
 //display end separator
 menu.write(utils.repeat('-', defaultWith) + '\n');
-//display usage
-menu.add(chalk.bold('USAGE'));
 //display help
 menu.add(chalk.bold('HELP'));
 //display exit
@@ -66,13 +64,8 @@ menu.on('select', function (label, index) {
     }
 
     if (name === 'HELP') {
-        utils.printFile(utils.joinBinPath('help.txt'));
-        exit(0);
-        return;
-    }
-
-    if (name === 'USAGE') {
         utils.printFile(utils.joinBinPath('usage.txt'));
+        utils.printFile(utils.joinBinPath('help.txt'));
         exit(0);
         return;
     }

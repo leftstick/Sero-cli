@@ -1,6 +1,6 @@
 {yellow}{bold}Having trouble with a task?{/bold}{/yellow}
     You can register {bold}issues{/bold} at:
-        {magenta}magentahttps://github.com/leftstick/Sero-cli/issues{/magenta}
+        {magenta}https://github.com/leftstick/Sero-cli/issues{/magenta}
 
 {yellow}{bold}Found a bug or just want to contribute?{/bold}{/yellow}
     The official repository is:
