@@ -1,10 +1,11 @@
-var inquirer = require('inquirer');
 var fs = require('fs');
+var path = require('path');
+var inquirer = require('inquirer');
 var request = require('request');
-var Executor = require('../../libs/CmdExecutor');
-var BaseTask = require('../../libs/BaseTask');
-var utils = require('../../libs/Utils');
-var logger = utils.logger;
+var TaskRunner = require('terminal-task-runner');
+var Shell = TaskRunner.shell;
+var Base = TaskRunner.Base;
+var logger = TaskRunner.logger;
 
 var MAIL_REG = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -31,7 +32,7 @@ var options = {
 };
 
 
-var Task = BaseTask.extend({
+var Task = Base.extend({
     id: 'CreateGitRepo',
     name: 'Create a brand new repository on Github',
     priority: 5,
@@ -67,7 +68,7 @@ var Task = BaseTask.extend({
             options.body.description = answer.proDesc;
             options.body = JSON.stringify(options.body);
 
-            answer.localPath = utils.joinWorkingPath(answer.proName);
+            answer.localPath = path.join('.', answer.proName);
 
 
             fs.exists(answer.localPath, function(exists) {
@@ -92,7 +93,7 @@ var Task = BaseTask.extend({
                     }
                     logger.success('Repository [' + answer.proName + '] is created!');
 
-                    var exec = new Executor(['git clone ' + res.ssh_url]);
+                    var exec = new Shell(['git clone ' + res.ssh_url]);
 
                     exec.start().then(function() {
                         cons();

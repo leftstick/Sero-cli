@@ -1,3 +1,9 @@
+{yellow}{bold}Usage: {/bold}{/yellow}
+  
+    1. Select one task by navigating with {green}KEY_UP{/green}/{green}KEY_DOWN{/green} or {green}j{/green}/{green}k{/green}
+    2. Hint {green}{bold}ENTER{/bold}{/green} to execute the selected task
+  
+
 {yellow}{bold}Having trouble with a task?{/bold}{/yellow}
     You can register {bold}issues{/bold} at:
         {magenta}https://github.com/leftstick/Sero-cli/issues{/magenta}

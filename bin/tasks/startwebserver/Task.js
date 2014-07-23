@@ -1,9 +1,10 @@
 var gulp = require('gulp');
 var webserver = require('gulp-webserver');
-var BaseTask = require('../../libs/BaseTask');
+var TaskRunner = require('terminal-task-runner');
+var Base = TaskRunner.Base;
 
 
-var Task = BaseTask.extend({
+var Task = Base.extend({
     id: 'StartWebServer',
     name: 'Start a static web server for current working directory',
     priority: 4,

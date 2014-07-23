@@ -1,7 +1,8 @@
-var inquirer = require('inquirer');
 var fs = require('fs');
-var Executor = require('../../libs/CmdExecutor');
-var BaseTask = require('../../libs/BaseTask');
+var inquirer = require('inquirer');
+var TaskRunner = require('terminal-task-runner');
+var Shell = TaskRunner.shell;
+var Base = TaskRunner.Base;
 
 var configs = [
     'git config --local user.name <%= username %>',
@@ -19,13 +20,13 @@ var configs = [
 ];
 
 
-var Task = BaseTask.extend({
+var Task = Base.extend({
     id: 'GitConfig',
     name: 'Configure git options for current working directory',
     priority: 1,
-    run: function (cons) {
+    run: function(cons) {
 
-        fs.stat('.git', function (err, stats) {
+        fs.stat('.git', function(err, stats) {
             var error = 'The working directory must be a valid git project.';
             if (err) {
                 cons(error);
@@ -37,26 +38,26 @@ var Task = BaseTask.extend({
             }
 
             inquirer.prompt([{
-                type: 'input',
-                name: 'username',
-                message: 'username:',
-                default: process.env.USERNAME
-            }, {
-                type: 'input',
-                name: 'useremail',
-                message: 'useremail:',
-                validate: function (pass) {
-                    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return re.test(pass);
-                }
-            }], function (res) {
+                    type: 'input',
+                    name: 'username',
+                    message: 'username:',
+                    default: process.env.USERNAME
+                }, {
+                    type: 'input',
+                    name: 'useremail',
+                    message: 'useremail:',
+                    validate: function(pass) {
+                        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                        return re.test(pass);
+                    }
+                }], function(res) {
 
-                var exec = new Executor(configs, res);
+                var exec = new Shell(configs, res);
 
-                exec.start().then(function () {
+                exec.start().then(function() {
                     cons();
                     return;
-                }, function (err) {
+                }, function(err) {
                     cons(err);
                     return;
                 });
