@@ -8,7 +8,7 @@ var TaskRunner = require('terminal-task-runner');
 var logger = TaskRunner.logger;
 
 
-var title = 'ANGAP SAVE YOU FROM COMPLICATED DEVELOPMENT WORKS';
+var title = 'SERO SAVE YOU FROM COMPLICATED DEVELOPMENT WORKS';
 var subtitle = 'Select an task and hit Enter to begin';
 
 var runner = TaskRunner.createMenu({
