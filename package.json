@@ -1,7 +1,7 @@
 {
   "name": "sero-cli",
   "description": "The toolkit helps developers easily start with web development work",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "homepage": "https://github.com/leftstick/Sero-cli",
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "inquirer": "^0.5.1",
     "lodash": "^2.4.1",
     "request": "^2.36.0",
-    "terminal-task-runner": "^1.0.2"
+    "terminal-task-runner": "^1.0.3"
   },
   "devDependencies": {},
   "scripts": {},

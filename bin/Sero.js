@@ -15,5 +15,6 @@ var runner = TaskRunner.createMenu({
     title: title,
     subtitle: subtitle,
     taskDir: path.resolve(__dirname, 'tasks'),
-    helpFile: path.resolve(__dirname, 'help.txt')
+    helpFile: path.resolve(__dirname, 'help.txt'),
+    version: 'v1.0.5'
 });
