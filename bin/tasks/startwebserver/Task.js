@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var webserver = require('gulp-webserver');
+var inquirer = require('inquirer');
 var TaskRunner = require('terminal-task-runner');
+var settingsMgr = require('../../libs/SettingsManager');
 var Base = TaskRunner.Base;
 
 
@@ -10,26 +12,49 @@ var Task = Base.extend({
     priority: 4,
     run: function(cons) {
 
-        var stream = gulp.src('.')
-        .pipe(webserver({
-            host: '0.0.0.0',
-            port: 8080,
-            livereload: true,
-            directoryListing: false,
-            fallback: 'index.html'
-        }));
+        inquirer.prompt([{
+                type: 'input',
+                name: 'root',
+                message: 'root for webserver',
+                default: '.'
+            }, {
+                type: 'input',
+                name: 'port',
+                message: 'port for webserver',
+                default: 8080
+            }, {
+                type: 'confirm',
+                name: 'livereload',
+                message: 'would you like to have livereload?',
+                default: true
+            }], function(res) {
 
-        stream.on('error', function(err) {
-            cons(err);
+            settingsMgr.saveSettings({
+                    webserverPort: res.port
+                }).done();
+
+            var stream = gulp.src(res.root)
+            .pipe(webserver({
+                host: '0.0.0.0',
+                port: res.port,
+                livereload: res.livereload,
+                directoryListing: false,
+                fallback: 'index.html'
+            }));
+
+            stream.on('error', function(err) {
+                cons(err);
+            });
+
+            stream.on('close', function() {
+                cons();
+            });
+
+            stream.on('finish', function() {
+                cons();
+            });
         });
 
-        stream.on('close', function() {
-            cons();
-        });
-
-        stream.on('finish', function() {
-            cons();
-        });
     }
 });
 

@@ -1,6 +1,7 @@
 var fs = require('fs');
 var inquirer = require('inquirer');
 var TaskRunner = require('terminal-task-runner');
+var settingsMgr = require('../../libs/SettingsManager');
 var Shell = TaskRunner.shell;
 var Base = TaskRunner.Base;
 
@@ -20,6 +21,14 @@ var configs = [
 ];
 
 
+var saveSettings = function(name, email) {
+    settingsMgr.saveSettings({
+            username: name,
+            useremail: email
+        }).done();
+};
+
+
 var Task = Base.extend({
     id: 'GitConfig',
     name: 'Configure git options for current working directory',
@@ -32,37 +41,55 @@ var Task = Base.extend({
                 cons(error);
                 return;
             }
+
             if (!stats.isDirectory()) {
                 cons(error);
                 return;
             }
 
-            inquirer.prompt([{
-                    type: 'input',
-                    name: 'username',
-                    message: 'username:',
-                    default: process.env.USERNAME
-                }, {
-                    type: 'input',
-                    name: 'useremail',
-                    message: 'useremail:',
-                    validate: function(pass) {
-                        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                        return re.test(pass);
-                    }
-                }], function(res) {
+            settingsMgr.loadSettings().then(function(settings) {
 
-                var exec = new Shell(configs, res);
+                var defUsername = process.env.USERNAME;
+                var defUseremail;
 
-                exec.start().then(function() {
-                    cons();
-                    return;
-                }, function(err) {
-                    cons(err);
-                    return;
+                if (settings) {
+                    defUsername = settings.username ? settings.username : defUsername;
+                    defUseremail = settings.useremail ? settings.useremail : undefined;
+                }
+
+                inquirer.prompt([{
+                        type: 'input',
+                        name: 'username',
+                        message: 'your name:',
+                        default: defUsername,
+                        validate: function(pass) {
+                            return !!pass;
+                        }
+                    }, {
+                        type: 'input',
+                        name: 'useremail',
+                        message: 'your email:',
+                        default: defUseremail,
+                        validate: function(pass) {
+                            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                            return re.test(pass);
+                        }
+                    }], function(res) {
+
+                    saveSettings(res.username, res.useremail);
+
+                    var exec = new Shell(configs, res);
+                    exec.start().then(function() {
+                        cons();
+                    }, function(err) {
+                        cons(err);
+                    });
+
                 });
 
             });
+
+
         });
 
     }

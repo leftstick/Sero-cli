@@ -5,9 +5,6 @@
 var path = require('path');
 var TaskRunner = require('terminal-task-runner');
 
-var logger = TaskRunner.logger;
-
-
 var title = 'SERO SAVE YOU FROM COMPLICATED DEVELOPMENT WORKS';
 var subtitle = 'Select an task and hit Enter to begin';
 

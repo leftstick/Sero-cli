@@ -1,7 +1,7 @@
 Sero-cli
 =========
 
-![](http://img.shields.io/badge/npm_module-v1.0.5-green.svg?style=flat)  ![](http://img.shields.io/badge/dependencies-latest-yellowgreen.svg?style=flat)
+![](http://img.shields.io/badge/npm_module-v1.0.6-green.svg?style=flat)  ![](http://img.shields.io/badge/dependencies-latest-yellowgreen.svg?style=flat)
 ![](http://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)
 
 > The web application development toolkit
