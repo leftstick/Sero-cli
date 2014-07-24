@@ -17,4 +17,5 @@ git config --local alias.st status
 git config --local alias.br branch
 ```
 
-> Note: The terminal will ask you for the `<name>` and `<email>`
+> The terminal will ask you for the `<name>` and `<email>`
+> The `sero` will remember what the `<name>` and `<email>` were from last time you use.

@@ -7,16 +7,16 @@ var Base = TaskRunner.Base;
 var Task = Base.extend({
     id: 'installnpm',
     name: 'Install npm dependencies',
-    priority: 2,
-    run: function(cons) {
+    position: 2,
+    run: function (cons) {
 
 
-        fs.readdir('.', function(err, files) {
+        fs.readdir('.', function (err, files) {
             if (err) {
                 cons(err);
                 return;
             }
-            var jsonArr = _.filter(files, function(file) {
+            var jsonArr = _.filter(files, function (file) {
                 return file === 'package.json';
             });
 
@@ -27,10 +27,10 @@ var Task = Base.extend({
 
             var exec = new Shell(['npm install']);
 
-            exec.start().then(function() {
+            exec.start().then(function () {
                 cons();
                 return;
-            }, function(err) {
+            }, function (err) {
                 cons(err);
                 return;
             });
