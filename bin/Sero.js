@@ -26,6 +26,6 @@ var runner = TaskRunner.createMenu({
     subtitle: subtitle,
     taskDir: path.resolve(__dirname, 'tasks'),
     helpFile: path.resolve(__dirname, 'help.txt'),
-    version: 'v1.0.6',
+    version: 'v' + pkg.version,
     preferenceMgr: TaskRunner.getPrefMgr('.sero')
 });
