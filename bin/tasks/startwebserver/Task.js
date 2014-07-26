@@ -1,9 +1,20 @@
 var gulp = require('gulp');
+var less = require('gulp-less');
+var path = require('path');
+var fs = require('fs');
 var webserver = require('gulp-webserver');
 var _ = require('lodash');
 var inquirer = require('inquirer');
 var TaskRunner = require('terminal-task-runner');
 var Base = TaskRunner.Base;
+
+
+
+var compileLess = function (lessPath, dest) {
+    gulp.src(lessPath + '/**/*')
+        .pipe(less())
+        .pipe(gulp.dest(dest));
+};
 
 
 var Task = Base.extend({
@@ -38,6 +49,17 @@ var Task = Base.extend({
                 webserverport: res.port
             });
 
+            var lessPath = path.join(res.root, 'less');
+            var dest = path.join(res.root, 'css');
+
+            fs.exists(lessPath, function (exists) {
+                if (!exists) {
+                    return;
+                }
+                compileLess(lessPath, dest);
+            });
+
+
             var stream = gulp.src(res.root)
                 .pipe(webserver({
                     host: '0.0.0.0',
@@ -58,6 +80,17 @@ var Task = Base.extend({
             stream.on('finish', function () {
                 cons();
             });
+
+
+            fs.exists(lessPath, function (exists) {
+                if (!exists) {
+                    return;
+                }
+                gulp.watch(lessPath + '/**/*', function (event) {
+                    compileLess(lessPath, dest);
+                });
+            });
+
         });
 
     }
