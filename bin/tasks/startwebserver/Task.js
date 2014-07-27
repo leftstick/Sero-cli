@@ -1,3 +1,4 @@
+'use strict';
 var gulp = require('gulp');
 var less = require('gulp-less');
 var path = require('path');
@@ -36,7 +37,8 @@ var Task = Base.extend({
             message: 'port for webserver',
             default: this.get('webserverport', 8080),
             validate: function (pass) {
-                return !!pass && _.isNumber(pass);
+                var num = Number(pass);
+                return _.isNumber(num) && !_.isNaN(num);
             }
         }, {
             type: 'confirm',
