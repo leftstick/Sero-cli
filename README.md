@@ -1,7 +1,7 @@
 Sero-cli
 =========
 
-![](http://img.shields.io/badge/npm_module-v1.1.0-green.svg?style=flat)  ![](http://img.shields.io/badge/dependencies-latest-yellowgreen.svg?style=flat)
+![](http://img.shields.io/badge/npm_module-v1.2.0-green.svg?style=flat)  ![](http://img.shields.io/badge/dependencies-latest-yellowgreen.svg?style=flat)
 ![](http://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)
 
 > The web application development toolkit
@@ -39,6 +39,7 @@ sero
 - [Install bower dependencies](./docs/task_installbower.md)
 - [Start a static web server for current working directory](./docs/task_startwebserver.md)
 - [Create a brand new repository on Github](./docs/task_createrepo.md)
+- [Launch web service simulator](./docs/task_startwebservicesimulator.md)
 
 ## LICENSE ##
 
