@@ -36,32 +36,32 @@ var Task = Base.extend({
     id: 'CreateGitRepo',
     name: 'Create a brand new repository on Github',
     position: 5,
-    run: function (cons) {
+    run: function(cons) {
 
         inquirer.prompt([{
-            type: 'input',
-            name: 'username',
-            message: 'Username or Email for Github',
-            default: process.env.USERNAME
-        }, {
-            type: 'password',
-            name: 'password',
-            message: 'Password for Github',
-            validate: function (pass) {
-                return !!pass;
-            }
-        }, {
-            type: 'input',
-            name: 'proName',
-            message: 'Project name to be created',
-            validate: function (pass) {
-                return !!pass;
-            }
-        }, {
-            type: 'input',
-            name: 'proDesc',
-            message: 'Project description'
-        }], function (answer) {
+                type: 'input',
+                name: 'username',
+                message: 'Username or Email for Github',
+                default: _this.get('githubaccount', process.env.USERNAME)
+            }, {
+                type: 'password',
+                name: 'password',
+                message: 'Password for Github',
+                validate: function(pass) {
+                    return !!pass;
+                }
+            }, {
+                type: 'input',
+                name: 'proName',
+                message: 'Project name to be created',
+                validate: function(pass) {
+                    return !!pass;
+                }
+            }, {
+                type: 'input',
+                name: 'proDesc',
+                message: 'Project description'
+            }], function(answer) {
             options.auth.user = answer.username;
             options.auth.pass = answer.password;
             options.body.name = answer.proName;
@@ -69,15 +69,18 @@ var Task = Base.extend({
             options.body = JSON.stringify(options.body);
 
             answer.localPath = path.join('.', answer.proName);
+            _this.put({
+                githubaccount: answer.username
+            });
 
 
-            fs.exists(answer.localPath, function (exists) {
+            fs.exists(answer.localPath, function(exists) {
                 if (exists) {
                     cons('The directory [' + answer.proName + '] is already exist.');
                     return;
                 }
 
-                request(options, function (err, incoming, response) {
+                request(options, function(err, incoming, response) {
                     var res = JSON.parse(response);
                     if (err) {
                         cons(err);
@@ -95,10 +98,10 @@ var Task = Base.extend({
 
                     var exec = new Shell(['git clone ' + res.ssh_url]);
 
-                    exec.start().then(function () {
+                    exec.start().then(function() {
                         cons();
                         return;
-                    }, function (err) {
+                    }, function(err) {
                         cons(err);
                         return;
                     });

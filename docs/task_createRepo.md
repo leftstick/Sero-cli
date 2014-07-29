@@ -11,4 +11,5 @@ Terminal will ask you the following questions for creating a new repository on `
 
 After answered above questions, the project would be generated on `Github` and cloned into current working directory.
 
+> The `sero` will remember the `Username or Email for Github`.
 > Note: Failure message would be shown on the terminal if the project generated failed.
