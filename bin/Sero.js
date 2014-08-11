@@ -6,6 +6,7 @@ var path = require('path');
 var TaskRunner = require('terminal-task-runner');
 var updateNotifier = require('update-notifier');
 var pkg = require('../package.json');
+var taskList = require('./taskList');
 
 
 
@@ -21,10 +22,11 @@ notifier.notify();
 var title = 'SERO SAVE YOU FROM COMPLICATED DEVELOPMENT WORKS';
 var subtitle = 'Select an task and hit Enter to begin';
 
-var runner = TaskRunner.createMenu({
+TaskRunner.createMenu({
     title: title,
     subtitle: subtitle,
     taskDir: path.resolve(__dirname, 'tasks'),
+    taskList: taskList,
     helpFile: path.resolve(__dirname, 'help.txt'),
     version: 'v' + pkg.version,
     preferenceMgr: TaskRunner.getPrefMgr('.sero')
