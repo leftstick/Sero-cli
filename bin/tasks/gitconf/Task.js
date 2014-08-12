@@ -1,5 +1,4 @@
-var fs = require('fs');
-var inquirer = require('inquirer');
+
 var TaskRunner = require('terminal-task-runner');
 var Shell = TaskRunner.shell;
 var Base = TaskRunner.Base;
@@ -24,11 +23,12 @@ var Task = Base.extend({
     id: 'GitConfig',
     name: 'Configure git options for current working directory',
     position: 1,
-    run: function (cons) {
+    run: function(cons) {
 
+        var fs = require('fs');
         var _this = this;
 
-        fs.stat('.git', function (err, stats) {
+        fs.stat('.git', function(err, stats) {
             var error = 'The working directory must be a valid git project.';
             if (err) {
                 cons(error);
@@ -41,35 +41,35 @@ var Task = Base.extend({
             }
 
 
-            inquirer.prompt([{
+            _this.prompt([{
                 type: 'input',
                 name: 'username',
                 message: 'your name:',
                 default: _this.get('username', process.env.USERNAME)
-            }, {
+                }, {
                 type: 'input',
                 name: 'useremail',
                 message: 'your email:',
                 default: _this.get('useremail') ? _this.get('useremail') : undefined,
-                validate: function (pass) {
+                validate: function(pass) {
                     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return re.test(pass);
                 }
-            }], function (res) {
+            }], function(res) {
 
-                _this.put({
-                    username: res.username,
-                    useremail: res.useremail
+                    _this.put({
+                        username: res.username,
+                        useremail: res.useremail
+                    });
+
+                    var exec = new Shell(configs, res);
+                    exec.start().then(function() {
+                        cons();
+                    }, function(err) {
+                            cons(err);
+                        });
+
                 });
-
-                var exec = new Shell(configs, res);
-                exec.start().then(function () {
-                    cons();
-                }, function (err) {
-                    cons(err);
-                });
-
-            });
 
 
         });

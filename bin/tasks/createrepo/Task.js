@@ -1,9 +1,5 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var inquirer = require('inquirer');
-var request = require('request');
 var TaskRunner = require('terminal-task-runner');
 var Shell = TaskRunner.shell;
 var Base = TaskRunner.Base;
@@ -38,9 +34,13 @@ var Task = Base.extend({
     position: 5,
     run: function(cons) {
 
+        var fs = require('fs');
+        var path = require('path');
+        var request = require('request');
+
         var _this = this;
 
-        inquirer.prompt([{
+        this.prompt([{
             type: 'input',
             name: 'username',
             message: 'Username or Email for Github',
