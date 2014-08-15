@@ -1,8 +1,9 @@
 Sero-cli
 =========
 
-![](http://img.shields.io/badge/npm_module-v1.2.3-green.svg?style=flat)  ![](http://img.shields.io/badge/dependencies-latest-yellowgreen.svg?style=flat)
-![](http://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)
+[![NPM version][npm-image]][npm-url]
+![][david-url]
+![][travis-url]
 
 > The web application development toolkit
 
@@ -44,3 +45,8 @@ sero
 ## LICENSE ##
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+
+[npm-url]: https://npmjs.org/package/sero-cli
+[npm-image]: https://badge.fury.io/js/sero-cli.png
+[david-url]:https://david-dm.org/leftstick/sero-cli.png
+[travis-url]:https://api.travis-ci.org/leftstick/sero-cli.svg?branch=master
