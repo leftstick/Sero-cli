@@ -7,7 +7,7 @@ var Base = TaskRunner.Base;
 var compileLess = function(lessPath, dest) {
     var gulp = require('gulp');
     var less = require('gulp-less');
-    gulp.src(lessPath + '/**/*')
+    gulp.src(lessPath + '/main.less')
         .pipe(less())
         .pipe(gulp.dest(dest));
 };
