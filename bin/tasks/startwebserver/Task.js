@@ -4,11 +4,14 @@ var Base = TaskRunner.Base;
 
 
 
-var compileLess = function(lessPath, dest) {
+var compileLess = function(lessPath, dest, paths) {
     var gulp = require('gulp');
     var less = require('gulp-less');
+
     gulp.src(lessPath + '/main.less')
-        .pipe(less())
+        .pipe(less({
+            paths: paths
+        }))
         .pipe(gulp.dest(dest));
 };
 
@@ -42,6 +45,13 @@ var Task = Base.extend({
                 return _.isNumber(num) && !_.isNaN(num);
             }
             }, {
+            type: 'input',
+            name: 'paths',
+            message: 'paths for less(separate in comma)',
+            when: function(pass) {
+                return fs.existsSync(path.join(pass.root, 'less'));
+            }
+            }, {
             type: 'confirm',
             name: 'livereload',
             message: 'would you like to have livereload?',
@@ -55,11 +65,19 @@ var Task = Base.extend({
                 var lessPath = path.join(res.root, 'less');
                 var dest = path.join(res.root, 'css');
 
+                var paths = [];
+
+                if (res.paths) {
+                    _.each(res.paths.split(','), function(p) {
+                        paths.push(path.join(res.root, p));
+                    });
+                }
+
                 fs.exists(lessPath, function(exists) {
                     if (!exists) {
                         return;
                     }
-                    compileLess(lessPath, dest);
+                    compileLess(lessPath, dest, paths);
                 });
 
 
@@ -90,7 +108,7 @@ var Task = Base.extend({
                         return;
                     }
                     gulp.watch(lessPath + '/**/*', function(event) {
-                        compileLess(lessPath, dest);
+                        compileLess(lessPath, dest, paths);
                     });
                 });
 
