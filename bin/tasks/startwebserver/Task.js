@@ -7,11 +7,17 @@ var Base = TaskRunner.Base;
 var compileLess = function(lessPath, dest, paths) {
     var gulp = require('gulp');
     var less = require('gulp-less');
+    var prefix = require('gulp-autoprefixer');
+    var sourcemap = require('gulp-sourcemaps');
 
     gulp.src(lessPath + '/main.less')
+        .pipe(sourcemap.init())
         .pipe(less({
-            paths: paths
+            paths: paths,
+            compress: true
         }))
+        .pipe(sourcemap.write())
+        .pipe(prefix('last 2 version'))
         .pipe(gulp.dest(dest));
 };
 
