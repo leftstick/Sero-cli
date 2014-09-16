@@ -17,7 +17,10 @@ var compileLess = function(lessPath, dest, paths) {
             compress: true
         }))
         .pipe(sourcemap.write())
-        .pipe(prefix('last 2 version'))
+        .pipe(prefix({
+            browsers: ['last 5 versions'],
+            cascade: false
+        }))
         .pipe(gulp.dest(dest));
 };
 
