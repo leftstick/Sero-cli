@@ -14,12 +14,12 @@ var compileLess = function(lessPath, dest, paths) {
         .pipe(sourcemap.init())
         .pipe(less({
             paths: paths,
-            compress: true
+            compress: false
         }))
         .pipe(sourcemap.write())
         .pipe(prefix({
             browsers: ['last 5 versions'],
-            cascade: false
+            cascade: true
         }))
         .pipe(gulp.dest(dest));
 };
