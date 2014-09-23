@@ -1,3 +1,4 @@
+'use strict';
 var TaskRunner = require('terminal-task-runner');
 var Shell = TaskRunner.shell;
 var Base = TaskRunner.Base;
@@ -6,8 +7,14 @@ var Task = Base.extend({
     id: 'installnpm',
     name: 'Install npm dependencies',
     position: 2,
+    command: 'npmi',
+    check: function(cmd) {
+        return true;
+    },
     run: function(cons) {
-
+        this.action(undefined, cons);
+    },
+    action: function(answer, cons) {
         var _ = require('lodash');
         var fs = require('fs');
         fs.readdir('.', function(err, files) {
@@ -30,12 +37,11 @@ var Task = Base.extend({
                 cons();
                 return;
             }, function(err) {
-                    cons(err);
-                    return;
-                });
+                cons(err);
+                return;
+            });
 
         });
-
     }
 });
 

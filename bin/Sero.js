@@ -8,7 +8,7 @@ var updateNotifier = require('update-notifier');
 var pkg = require('../package.json');
 var taskList = require('./taskList');
 
-
+var Cmd = require('./command');
 
 // Checks for available update and returns an instance
 var notifier = updateNotifier({
@@ -19,15 +19,20 @@ var notifier = updateNotifier({
 
 notifier.notify();
 
-var title = 'SERO SAVE YOU FROM COMPLICATED DEVELOPMENT WORKS';
-var subtitle = 'Select an task and hit Enter to begin';
 
-TaskRunner.createMenu({
-    title: title,
-    subtitle: subtitle,
+var options = {
+    title: 'SERO SAVE YOU FROM COMPLICATED DEVELOPMENT WORKS',
+    subtitle: 'Select an task and hit Enter to begin',
     taskDir: path.resolve(__dirname, 'tasks'),
     taskList: taskList,
     helpFile: path.resolve(__dirname, 'help.txt'),
     version: 'v' + pkg.version,
     preferenceName: '.sero'
-});
+};
+
+var cmder = new Cmd(process.argv.slice(2), options);
+if (cmder.shouldRunInCliMode()) {
+    cmder.exec();
+} else {
+    TaskRunner.createMenu(options);
+}

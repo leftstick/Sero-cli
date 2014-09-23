@@ -1,4 +1,4 @@
-
+'use strict';
 var TaskRunner = require('terminal-task-runner');
 var Shell = TaskRunner.shell;
 var Base = TaskRunner.Base;
@@ -23,7 +23,42 @@ var Task = Base.extend({
     id: 'GitConfig',
     name: 'Configure git options for current working directory',
     position: 1,
+    command: 'git',
+    options: [{
+        flags: '-u, --username <username>',
+        description: 'specify the username for github account'
+    }, {
+        flags: '-e, --useremail <email>',
+        description: 'specify the email for github account'
+    }],
+    check: function(cmd) {
+        return cmd.username && cmd.useremail;
+    },
     run: function(cons) {
+
+        var _this = this;
+        _this.prompt([{
+            type: 'input',
+            name: 'username',
+            message: 'your name:',
+            default: _this.get('username', process.env.USERNAME)
+        }, {
+            type: 'input',
+            name: 'useremail',
+            message: 'your email:',
+            default: _this.get('useremail') ? _this.get('useremail') : undefined,
+            validate: function(pass) {
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(pass);
+            }
+        }], function(answer) {
+
+            _this.action(answer, cons);
+
+        });
+
+    },
+    action: function(answer, cons) {
 
         var fs = require('fs');
         var _this = this;
@@ -40,40 +75,19 @@ var Task = Base.extend({
                 return;
             }
 
+            _this.put({
+                username: answer.username,
+                useremail: answer.useremail
+            });
 
-            _this.prompt([{
-                type: 'input',
-                name: 'username',
-                message: 'your name:',
-                default: _this.get('username', process.env.USERNAME)
-                }, {
-                type: 'input',
-                name: 'useremail',
-                message: 'your email:',
-                default: _this.get('useremail') ? _this.get('useremail') : undefined,
-                validate: function(pass) {
-                    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    return re.test(pass);
-                }
-            }], function(res) {
-
-                    _this.put({
-                        username: res.username,
-                        useremail: res.useremail
-                    });
-
-                    var exec = new Shell(configs, res);
-                    exec.start().then(function() {
-                        cons();
-                    }, function(err) {
-                            cons(err);
-                        });
-
-                });
-
+            var exec = new Shell(configs, answer);
+            exec.start().then(function() {
+                cons();
+            }, function(err) {
+                cons(err);
+            });
 
         });
-
     }
 });
 

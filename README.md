@@ -25,13 +25,30 @@ Following technologies are recommended to know before starting use it.
 npm install sero-cli -g
 ```
 
-## Usage ##
+## Basic Usage ##
 
 Move to whatever the location you want to work in. 
 
 ```shell
 sero
 ```
+
+## Advanced Usage ##
+
+Advanced user may love specifying the task directly without choosing them from the UI. We provide the command line to achieve this.
+
+
+```shell
+sero [command] [options]
+```
+
+For example:
+
+```shell
+sero git -u testuser -e test@gmail.com
+```
+
+Above command is equivalent to `Configure git options for current working directory`
 
 ## Available Tasks ##
 

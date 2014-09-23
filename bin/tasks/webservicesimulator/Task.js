@@ -11,13 +11,22 @@ var Task = Base.extend({
     id: 'WebServiceSimulator',
     name: 'Launch web service simulator',
     position: 6,
+    command: 'simulator',
+    options: [{
+        flags: '-p, --port <port>',
+        description: 'specify the port of the static webserver'
+    }, {
+        flags: '-r, --routerDir <routerDir>',
+        description: 'specify the less paths'
+    }],
+    check: function(cmd) {
+        return cmd.port && cmd.routerDir;
+    },
     run: function(cons) {
 
-        var fs = require('fs');
-        var path = require('path');
-        var Simulator = require('webservice-simulator');
-
         var _this = this;
+        var path = require('path');
+        var fs = require('fs');
 
         this.prompt([{
             type: 'input',
@@ -27,7 +36,7 @@ var Task = Base.extend({
             validate: function(pass) {
                 return isInt(pass);
             }
-            }, {
+        }, {
             type: 'input',
             name: 'routerDir',
             message: 'Specify the routerDir',
@@ -37,18 +46,35 @@ var Task = Base.extend({
             }
         }], function(answer) {
 
-                _this.put({
-                    simulatorPort: answer.port,
-                    simulatorRouterDir: answer.routerDir
-                });
-                new Simulator({
-                    port: answer.port,
-                    routerDir: path.resolve('.', answer.routerDir)
-                }).start();
+            _this.action(answer, cons);
+
+        });
+
+    },
+    action: function(answer, cons) {
+        var path = require('path');
+        var fs = require('fs');
+
+        if (!isInt(answer.port)) {
+            cons('port must be int');
+            return;
+        }
+        if (!fs.existsSync(path.resolve('.', answer.routerDir))) {
+            cons('routerDir must exist');
+            return;
+        }
+        var _this = this;
+        var Simulator = require('webservice-simulator');
 
 
-            });
-
+        _this.put({
+            simulatorPort: answer.port,
+            simulatorRouterDir: answer.routerDir
+        });
+        new Simulator({
+            port: answer.port,
+            routerDir: path.resolve('.', answer.routerDir)
+        }).start();
     }
 });
 
