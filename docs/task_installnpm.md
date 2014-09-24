@@ -7,3 +7,8 @@ npm install
 ```
 
 > Note: The terminal requires a valid `package.json` in the current working directory.
+
+
+```powershell
+sero npmi
+```

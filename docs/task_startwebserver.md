@@ -13,3 +13,8 @@
 > all files under `<root>` directory would be watched. If any change, notify browser, and if `less` files changed, re-compile them
 
 > `port` will be remembered by `sero` from last time you use
+
+
+```powershell
+sero server -r <root> -p <port> -le [less paths] [-l]
+```

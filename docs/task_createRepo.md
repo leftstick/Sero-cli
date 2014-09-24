@@ -13,3 +13,10 @@ After answered above questions, the project would be generated on `Github` and c
 
 > The `sero` will remember the `Username or Email for Github`.
 > Note: Failure message would be shown on the terminal if the project generated failed.
+
+
+#### Command ####
+
+```powershell
+sero create -u <username> -p <password> -n <projectname> -d <description> 
+```

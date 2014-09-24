@@ -7,3 +7,9 @@ bower install
 ```
 
 > Note: The terminal requires a valid `bower.json` in the current working directory.
+
+#### Command ####
+
+```powershell
+sero boweri
+```

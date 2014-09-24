@@ -35,7 +35,7 @@ sero
 
 ## Advanced Usage ##
 
-Advanced user may love specifying the task directly without choosing them from the UI. We provide the command line to achieve this.
+Advanced user may love specifying the task directly without choosing them from UI. We provide the command line to achieve this.
 
 
 ```shell
@@ -48,7 +48,9 @@ For example:
 sero git -u testuser -e test@gmail.com
 ```
 
-Above command is equivalent to `Configure git options for current working directory`
+> Above command is equivalent to `Configure git options for current working directory`
+
+User `sero --help` to check the usage for each task
 
 ## Available Tasks ##
 

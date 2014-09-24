@@ -12,3 +12,8 @@
 - Cool! you made it
 
 > `port` and `routerDir` will be remembered by `sero` for next time use
+
+
+```powershell
+sero simulator -p <port> -r <routerDir>
+```
