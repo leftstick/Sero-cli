@@ -67,5 +67,5 @@ User `sero --help` to check the usage for each task
 
 [npm-url]: https://npmjs.org/package/sero-cli
 [npm-image]: https://badge.fury.io/js/sero-cli.png
-[david-url]:https://david-dm.org/leftstick/sero-cli.png
-[travis-url]:https://api.travis-ci.org/leftstick/sero-cli.svg?branch=master
+[david-url]: https://david-dm.org/leftstick/sero-cli.png
+[travis-url]: https://api.travis-ci.org/leftstick/Sero-cli.svg?branch=master
