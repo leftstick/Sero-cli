@@ -2,7 +2,7 @@ Sero-cli
 =========
 
 [![NPM version][npm-image]][npm-url]
-![][david-url]
+![][david-url] 
 ![][travis-url]
 
 > The web application development toolkit
