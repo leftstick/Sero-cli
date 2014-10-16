@@ -55,8 +55,6 @@ User `sero --help` to check the usage for each task
 ## Available Tasks ##
 
 - [Configure git options for current working directory](./docs/task_gitconf.md)
-- [Install npm dependencies](./docs/task_installnpm.md)
-- [Install bower dependencies](./docs/task_installbower.md)
 - [Start a static web server for current working directory](./docs/task_startwebserver.md)
 - [Create a brand new repository on Github](./docs/task_createrepo.md)
 - [Launch web service simulator](./docs/task_startwebservicesimulator.md)

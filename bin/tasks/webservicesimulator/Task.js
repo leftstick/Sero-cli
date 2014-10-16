@@ -10,7 +10,7 @@ var isInt = function(val) {
 var Task = Base.extend({
     id: 'WebServiceSimulator',
     name: 'Launch web service simulator',
-    position: 6,
+    position: 4,
     command: 'simulator',
     options: [{
         flags: '-p, --port <port>',

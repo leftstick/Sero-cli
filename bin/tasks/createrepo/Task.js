@@ -31,7 +31,7 @@ var options = {
 var Task = Base.extend({
     id: 'CreateGitRepo',
     name: 'Create a brand new repository on Github',
-    position: 5,
+    position: 3,
     command: 'create',
     options: [{
         flags: '-u, --username <username>',
