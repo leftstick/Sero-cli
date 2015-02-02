@@ -3,11 +3,13 @@ var TaskRunner = require('terminal-task-runner');
 var Shell = TaskRunner.shell;
 var Base = TaskRunner.Base;
 
+var isWin = /^win/.test(process.platform);
+
 var configs = [
     'git config --local user.name <%= username %>',
     'git config --local user.email <%= useremail %>',
     'git config --local core.excludesfile $HOME/.gitignore',
-    'git config --local core.autocrlf input',
+    'git config --local core.autocrlf ' + (isWin ? 'true' : 'input'),
     'git config --local color.ui true',
     'git config --local gui.encoding utf-8',
     'git config --local push.default tracking',
@@ -18,6 +20,9 @@ var configs = [
     'git config --local alias.br branch'
 ];
 
+if (isWin) {
+    configs.push('git config --local core.quotepath false');
+}
 
 var Task = Base.extend({
     id: 'GitConfig',
