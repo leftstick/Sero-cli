@@ -9,21 +9,18 @@ var isInt = function(val) {
 var compileLess = function(lessPath, dest, paths) {
     var gulp = require('gulp');
     var less = require('gulp-less');
-    var prefix = require('gulp-autoprefixer');
-    var sourcemap = require('gulp-sourcemaps');
+    var LessPluginAutoPrefix = require('less-plugin-autoprefix');
+    var autoprefix = new LessPluginAutoPrefix({
+        browsers: ["last 5 versions"],
+        cascade: true
+    });
     var plumber = require('gulp-plumber');
 
     gulp.src(lessPath + '/main.less')
         .pipe(plumber())
-        .pipe(sourcemap.init())
         .pipe(less({
             paths: paths,
-            compress: false
-        }))
-        .pipe(sourcemap.write())
-        .pipe(prefix({
-            browsers: ['last 5 versions'],
-            cascade: true
+            plugins: [autoprefix]
         }))
         .pipe(gulp.dest(dest));
 
