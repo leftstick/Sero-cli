@@ -58,6 +58,7 @@ User `sero --help` to check the usage for each task
 - [Start a static web server for current working directory](./docs/task_startwebserver.md)
 - [Create a brand new repository on Github](./docs/task_createrepo.md)
 - [Launch web service simulator](./docs/task_startwebservicesimulator.md)
+- [Build Javascripts into one \'main.js\'](./docs/build.md)
 
 ## LICENSE ##
 

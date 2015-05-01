@@ -2,5 +2,6 @@
     "gitconf",
     "startwebserver",
     "createrepo",
-    "webservicesimulator"
+    "webservicesimulator",
+    "build"
 ]
