@@ -12,3 +12,5 @@ sero build -u
 ```
 
 > -u, --uglify  specify whether to uglify the compiled file
+
+`sero` works perfect with `yeoman` generator: [generator-require-angular](https://github.com/leftstick/generator-require-angular)
