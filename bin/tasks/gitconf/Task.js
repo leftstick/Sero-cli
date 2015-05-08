@@ -1,4 +1,5 @@
 'use strict';
+
 var TaskRunner = require('terminal-task-runner');
 var Shell = TaskRunner.shell;
 var Base = TaskRunner.Base;
@@ -85,7 +86,7 @@ var Task = Base.extend({
                 useremail: answer.useremail
             });
 
-            var exec = new Shell(configs, answer);
+            var exec = new Shell(configs, answer, true);
             exec.start().then(function() {
                 cons();
             }, function(err) {
