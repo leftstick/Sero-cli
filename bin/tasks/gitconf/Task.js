@@ -11,6 +11,7 @@ var configs = [
     'git config --local user.email <%= useremail %>',
     'git config --local core.excludesfile $HOME/.gitignore',
     'git config --local core.autocrlf ' + (isWin ? 'true' : 'input'),
+    'git config --local core.ignorecase false',
     'git config --local color.ui true',
     'git config --local gui.encoding utf-8',
     'git config --local push.default simple',
