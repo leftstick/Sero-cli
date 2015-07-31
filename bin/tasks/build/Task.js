@@ -7,22 +7,26 @@ var Task = Base.extend({
     name: 'Build Javascripts into one \'main.js\'',
     position: 5,
     command: 'build',
-    options: [{
-        flags: '-u, --uglify',
-        description: 'specify whether to uglify the compiled file'
-    }],
+    options: [
+        {
+            flags: '-u, --uglify',
+            description: 'specify whether to uglify the compiled file'
+        }
+    ],
     check: function() {
         return true;
     },
     run: function(cons) {
 
         var _this = this;
-        _this.prompt([{
-            type: 'confirm',
-            name: 'uglify',
-            message: 'Would you like to uglify the compiled file?',
-            default: true
-        }], function(answer) {
+        _this.prompt([
+            {
+                type: 'confirm',
+                name: 'uglify',
+                message: 'Would you like to uglify the compiled file?',
+                default: true
+            }
+        ], function(answer) {
             _this.action(answer, cons);
         });
 
@@ -34,7 +38,7 @@ var Task = Base.extend({
         var fs = require('fs');
         var spawn = require('cross-spawn');
         var buildPath = 'build';
-        var buildJsonPath = path.resolve(process.cwd(), 'js', 'build.json');
+        var buildJsonPath = path.resolve(process.cwd(), 'js', 'build.js');
         if (!fs.existsSync(buildJsonPath)) {
             cons('js/build.json doesn\'t exist');
             process.exit(1);
@@ -63,13 +67,14 @@ var Task = Base.extend({
                 .pipe(gulp.dest('build/'));
 
             stream.on('end', function() {
-                fs.writeFileSync(path.resolve(buildPath, 'js', 'build.json'), JSON.stringify(buildJson), {
+                fs.writeFileSync(path.resolve(buildPath, 'js', 'build.js'), JSON.stringify(buildJson), {
                     encoding: 'utf8'
                 });
-
-                var result = spawn(path.resolve(__dirname, 'r.js'), ['-o', 'build.json'], {
-                    cwd: path.resolve(process.cwd(), 'build', 'js')
-                });
+                var result = spawn(process.execPath, [
+                    path.resolve(__dirname, 'r.js'),
+                    '-o',
+                    'build.js'
+                ], {cwd: path.resolve(process.cwd(), 'build', 'js')});
 
                 result.stdout.pipe(process.stdout);
                 result.stderr.pipe(process.stderr);
