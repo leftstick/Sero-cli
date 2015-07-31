@@ -19,7 +19,14 @@ var configs = [
     'git config --local branch.autosetuprebase always',
     'git config --local alias.co checkout',
     'git config --local alias.st status',
-    'git config --local alias.br branch'
+    'git config --local alias.br branch',
+    'git config --local alias.ci commit',
+    'git config --local alias.cp cherry-pick',
+    'git config --local alias.df diff',
+    'git config --local alias.lo log --oneline',
+    'git config --local alias.pr pull --rebase',
+    'git config --local alias.pl pull',
+    'git config --local alias.ps push'
 ];
 
 if (isWin) {
@@ -31,34 +38,40 @@ var Task = Base.extend({
     name: 'Configure git options for current working directory',
     position: 1,
     command: 'git',
-    options: [{
-        flags: '-u, --username <username>',
-        description: 'specify the username for github account'
-    }, {
-        flags: '-e, --useremail <email>',
-        description: 'specify the email for github account'
-    }],
+    options: [
+        {
+            flags: '-u, --username <username>',
+            description: 'specify the username for github account'
+        },
+        {
+            flags: '-e, --useremail <email>',
+            description: 'specify the email for github account'
+        }
+    ],
     check: function(cmd) {
         return cmd.username && cmd.useremail;
     },
     run: function(cons) {
 
         var _this = this;
-        _this.prompt([{
-            type: 'input',
-            name: 'username',
-            message: 'your name:',
-            default: _this.get('username', process.env.USERNAME)
-        }, {
-            type: 'input',
-            name: 'useremail',
-            message: 'your email:',
-            default: _this.get('useremail') ? _this.get('useremail') : undefined,
-            validate: function(pass) {
-                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(pass);
+        _this.prompt([
+            {
+                type: 'input',
+                name: 'username',
+                message: 'your name:',
+                default: _this.get('username', process.env.USERNAME)
+            },
+            {
+                type: 'input',
+                name: 'useremail',
+                message: 'your email:',
+                default: _this.get('useremail') ? _this.get('useremail') : undefined,
+                validate: function(pass) {
+                    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return re.test(pass);
+                }
             }
-        }], function(answer) {
+        ], function(answer) {
 
             _this.action(answer, cons);
 
