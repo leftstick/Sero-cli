@@ -6,7 +6,7 @@ following stuff would be set for current working directory
 git config --local user.name "<name>"
 git config --local user.email "<email>"
 git config --local core.excludesfile $HOME/.gitignore
-git config --local core.autocrlf input
+git config --local core.autocrlf input #true for windows
 git config --local core.ignorecase false
 git config --local color.ui true
 git config --local gui.encoding utf-8
@@ -16,6 +16,13 @@ git config --local branch.autosetuprebase always
 git config --local alias.co checkout
 git config --local alias.st status
 git config --local alias.br branch
+git config --local alias.ci commit',
+git config --local alias.cp cherry-pick',
+git config --local alias.df diff,
+git config --local alias.lo log --oneline,
+git config --local alias.pr pull --rebase,
+git config --local alias.pl pull,
+git config --local alias.ps push
 ```
 
 > The terminal will ask you for the `<name>` and `<email>`
@@ -24,5 +31,5 @@ git config --local alias.br branch
 #### Command ####
 
 ```powershell
-sero git -u <username> -e <email> 
+sero git -u <username> -e <email>
 ```

@@ -39,7 +39,7 @@
     "rimraf": "^2.4.2",
     "terminal-task-runner": "^1.5.3",
     "update-notifier": "^0.5.0",
-    "webservice-simulator": "^1.5.1"
+    "webservice-simulator": "^1.5.2"
   },
   "devDependencies": {
     "mocha": "^2.2.5"
