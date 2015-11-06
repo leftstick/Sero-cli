@@ -2,9 +2,10 @@
 
 
 
-- specify `root` directory of the webserver. `.` by default 
+- specify `root` directory of the webserver. `.` by default
 - specify `port` number for the webserver. `8080` by default
-- specify `paths` for less parser if `less` folder exist under `root` 
+- specify `paths` for less parser if `less` folder exist under `root`
+- choose to enable `html5 push state mode`. `enable` by default
 - choose to enable `livereload`. `enable` by default
 
 
@@ -16,5 +17,5 @@
 
 
 ```powershell
-sero server -r <root> -p <port> -le [less paths] [-l]
+sero server -r <root> -p <port> -le [less paths] [-l] [-ps]
 ```

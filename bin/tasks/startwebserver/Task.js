@@ -11,17 +11,16 @@ var compileLess = function(lessPath, dest, paths) {
     var less = require('gulp-less');
     var LessPluginAutoPrefix = require('less-plugin-autoprefix');
     var autoprefix = new LessPluginAutoPrefix({
-        browsers: ["last 5 versions"],
+        browsers: [
+            'last 5 versions'
+        ],
         cascade: true
     });
     var plumber = require('gulp-plumber');
 
     gulp.src(lessPath + '/main.less')
         .pipe(plumber())
-        .pipe(less({
-            paths: paths,
-            plugins: [autoprefix]
-        }))
+        .pipe(less({paths: paths, plugins: [autoprefix]}))
         .pipe(gulp.dest(dest));
 
     TaskRunner.logger.info(lessPath + '/main.less was compiled');
@@ -33,19 +32,28 @@ var Task = Base.extend({
     name: 'Start a static web server for current working directory',
     position: 2,
     command: 'server',
-    options: [{
-        flags: '-r, --root <root>',
-        description: 'specify the root path of the static webserver'
-    }, {
-        flags: '-p, --port <port>',
-        description: 'specify the port of the static webserver'
-    }, {
-        flags: '-le, --paths [paths]',
-        description: 'specify the less paths'
-    }, {
-        flags: '-l, --livereload',
-        description: 'specify whether to enable livereload'
-    }],
+    options: [
+        {
+            flags: '-r, --root <root>',
+            description: 'specify the root path of the static webserver'
+        },
+        {
+            flags: '-p, --port <port>',
+            description: 'specify the port of the static webserver'
+        },
+        {
+            flags: '-le, --paths [paths]',
+            description: 'specify the less paths'
+        },
+        {
+            flags: '-l, --livereload',
+            description: 'specify whether to enable livereload'
+        },
+        {
+            flags: '-ps, --pushState',
+            description: 'specify whether to enable html5 pust state mode'
+        }
+    ],
     check: function(cmd) {
         return cmd.root && cmd.port;
     },
@@ -54,32 +62,43 @@ var Task = Base.extend({
         var fs = require('fs');
         var path = require('path');
 
-        this.prompt([{
-            type: 'input',
-            name: 'root',
-            message: 'root for webserver',
-            default: '.'
-        }, {
-            type: 'input',
-            name: 'port',
-            message: 'port for webserver',
-            default: this.get('webserverport', 8080),
-            validate: function(pass) {
-                return isInt(pass);
+        this.prompt([
+            {
+                type: 'input',
+                name: 'root',
+                message: 'root for webserver',
+                default: '.'
+            },
+            {
+                type: 'input',
+                name: 'port',
+                message: 'port for webserver',
+                default: this.get('webserverport', 8080),
+                validate: function(pass) {
+                    return isInt(pass);
+                }
+            },
+            {
+                type: 'input',
+                name: 'paths',
+                message: 'paths for less(separate in comma)',
+                when: function(pass) {
+                    return fs.existsSync(path.join(pass.root, 'less'));
+                }
+            },
+            {
+                type: 'confirm',
+                name: 'pushState',
+                message: 'would you like to enable html5 push state mode?',
+                default: true
+            },
+            {
+                type: 'confirm',
+                name: 'livereload',
+                message: 'would you like to have livereload?',
+                default: true
             }
-        }, {
-            type: 'input',
-            name: 'paths',
-            message: 'paths for less(separate in comma)',
-            when: function(pass) {
-                return fs.existsSync(path.join(pass.root, 'less'));
-            }
-        }, {
-            type: 'confirm',
-            name: 'livereload',
-            message: 'would you like to have livereload?',
-            default: true
-        }], function(answer) {
+        ], function(answer) {
             _this.action(answer, cons);
         });
     },
@@ -98,9 +117,7 @@ var Task = Base.extend({
         var _this = this;
 
 
-        _this.put({
-            webserverport: answer.port
-        });
+        _this.put({webserverport: answer.port});
 
         var lessPath = path.join(answer.root, 'less');
         var dest = path.join(answer.root, 'css');
@@ -126,7 +143,7 @@ var Task = Base.extend({
                 port: answer.port,
                 livereload: answer.livereload,
                 directoryListing: false,
-                fallback: 'index.html'
+                fallback: answer.pushState ? 'index.html' : undefined
             }));
 
         stream.on('error', function(err) {
