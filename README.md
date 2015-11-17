@@ -2,7 +2,7 @@ Sero-cli
 =========
 
 [![NPM version][npm-image]][npm-url]
-![][david-url] 
+![][david-url]
 ![][travis-url]
 
 > The web application development toolkit
@@ -16,7 +16,7 @@ Sero-cli provides a friendly interactive interface to help developers start deve
 Following technologies are recommended to know before starting use it.
 
 > [Nodejs](http://www.nodejs.org/) is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications<br/>
-> [NPM](http://www.npmjs.org/) is the official package manager for `Node.js`<br/> 
+> [NPM](http://www.npmjs.org/) is the official package manager for `Node.js`<br/>
 > [bower](http://bower.io/) works by fetching and installing packages from all over, taking care of hunting, finding, downloading, and saving the stuff you’re looking for<br/>
 
 ## Installation ##
@@ -27,7 +27,7 @@ npm install sero-cli -g
 
 ## Basic Usage ##
 
-Move to whatever the location you want to work in. 
+Move to whatever the location you want to work in.
 
 ```shell
 sero
@@ -56,7 +56,7 @@ User `sero --help` to check the usage for each task
 
 - [Configure git options for current working directory](./docs/task_gitconf.md)
 - [Start a static web server for current working directory](./docs/task_startwebserver.md)
-- [Create a brand new repository on Github](./docs/task_createrepo.md)
+- [Create a brand new repository on Github](./docs/task_createRepo.md)
 - [Launch web service simulator](./docs/task_startwebservicesimulator.md)
 - [Build Javascripts into one 'main.js'](./docs/build.md)
 
