@@ -64,7 +64,7 @@ User `sero --help` to check the usage for each task
 
 ## LICENSE ##
 
-[MIT License](http://en.wikipedia.org/wiki/MIT_License)
+[MIT License](https://raw.githubusercontent.com/leftstick/Sero-cli/master/LICENSE)
 
 [npm-url]: https://npmjs.org/package/sero-cli
 [npm-image]: https://badge.fury.io/js/sero-cli.png
