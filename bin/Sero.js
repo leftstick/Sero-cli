@@ -27,7 +27,8 @@ var options = {
     taskList: taskList,
     helpFile: path.resolve(__dirname, 'help.txt'),
     version: 'v' + pkg.version,
-    preferenceName: '.sero'
+    preferenceName: '.sero',
+    width: 65
 };
 
 var cmder = new Cmd(process.argv.slice(2), options);

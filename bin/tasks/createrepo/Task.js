@@ -31,21 +31,25 @@ var options = {
 var Task = Base.extend({
     id: 'CreateGitRepo',
     name: 'Create a brand new repository on Github',
-    position: 3,
     command: 'create',
-    options: [{
-        flags: '-u, --username <username>',
-        description: 'specify the user name'
-    }, {
-        flags: '-p, --password <password>',
-        description: 'specify the password'
-    }, {
-        flags: '-n, --project <project name>',
-        description: 'specify the project name'
-    }, {
-        flags: '-d, --desc <project description>',
-        description: 'specify the project description'
-    }],
+    options: [
+        {
+            flags: '-u, --username <username>',
+            description: 'specify the user name'
+        },
+        {
+            flags: '-p, --password <password>',
+            description: 'specify the password'
+        },
+        {
+            flags: '-n, --project <project name>',
+            description: 'specify the project name'
+        },
+        {
+            flags: '-d, --desc <project description>',
+            description: 'specify the project description'
+        }
+    ],
     check: function(cmd) {
         return cmd.username && cmd.password && cmd.project && cmd.desc;
     },
@@ -53,30 +57,35 @@ var Task = Base.extend({
 
         var _this = this;
 
-        this.prompt([{
-            type: 'input',
-            name: 'username',
-            message: 'Username or Email for Github',
-            default: _this.get('githubaccount', process.env.USERNAME)
-        }, {
-            type: 'password',
-            name: 'password',
-            message: 'Password for Github',
-            validate: function(pass) {
-                return !!pass;
+        this.prompt([
+            {
+                type: 'input',
+                name: 'username',
+                message: 'Username or Email for Github',
+                default: _this.get('githubaccount', process.env.USERNAME)
+            },
+            {
+                type: 'password',
+                name: 'password',
+                message: 'Password for Github',
+                validate: function(pass) {
+                    return !!pass;
+                }
+            },
+            {
+                type: 'input',
+                name: 'project',
+                message: 'Project name to be created',
+                validate: function(pass) {
+                    return !!pass;
+                }
+            },
+            {
+                type: 'input',
+                name: 'desc',
+                message: 'Project description'
             }
-        }, {
-            type: 'input',
-            name: 'project',
-            message: 'Project name to be created',
-            validate: function(pass) {
-                return !!pass;
-            }
-        }, {
-            type: 'input',
-            name: 'desc',
-            message: 'Project description'
-        }], function(answer) {
+        ], function(answer) {
             _this.action(answer, cons);
         });
 
@@ -93,9 +102,7 @@ var Task = Base.extend({
         options.body = JSON.stringify(options.body);
 
         answer.localPath = path.join('.', answer.project);
-        _this.put({
-            githubaccount: answer.username
-        });
+        _this.put({githubaccount: answer.username});
 
 
         fs.exists(answer.localPath, function(exists) {

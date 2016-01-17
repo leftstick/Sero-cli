@@ -5,7 +5,6 @@ var Base = TaskRunner.Base;
 var Task = Base.extend({
     id: 'Build',
     name: 'Build Javascripts into one \'main.js\'',
-    position: 5,
     command: 'build',
     options: [
         {
@@ -74,7 +73,9 @@ var Task = Base.extend({
                     path.resolve(__dirname, 'r.js'),
                     '-o',
                     'build.js'
-                ], {cwd: path.resolve(process.cwd(), 'build', 'js')});
+                ], {
+                    cwd: path.resolve(process.cwd(), 'build', 'js')
+                });
 
                 result.stdout.pipe(process.stdout);
                 result.stderr.pipe(process.stderr);

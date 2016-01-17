@@ -36,7 +36,6 @@ if (isWin) {
 var Task = Base.extend({
     id: 'GitConfig',
     name: 'Configure git options for current working directory',
-    position: 1,
     command: 'git',
     options: [
         {

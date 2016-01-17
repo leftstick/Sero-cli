@@ -4,6 +4,8 @@ Sero-cli
 [![NPM version][npm-image]][npm-url]
 ![][david-url]
 ![][travis-url]
+![][dt-url]
+![][license-url]
 
 > The web application development toolkit
 
@@ -68,3 +70,5 @@ User `sero --help` to check the usage for each task
 [npm-image]: https://badge.fury.io/js/sero-cli.png
 [david-url]: https://david-dm.org/leftstick/sero-cli.png
 [travis-url]: https://api.travis-ci.org/leftstick/Sero-cli.svg?branch=master
+[dt-url]:https://img.shields.io/npm/dt/Sero-cli.svg
+[license-url]:https://img.shields.io/npm/l/Sero-cli.svg

@@ -10,15 +10,17 @@ var isInt = function(val) {
 var Task = Base.extend({
     id: 'WebServiceSimulator',
     name: 'Launch web service simulator',
-    position: 4,
     command: 'simulator',
-    options: [{
-        flags: '-p, --port <port>',
-        description: 'specify the port of the static webserver'
-    }, {
-        flags: '-r, --routerDir <routerDir>',
-        description: 'specify the less paths'
-    }],
+    options: [
+        {
+            flags: '-p, --port <port>',
+            description: 'specify the port of the static webserver'
+        },
+        {
+            flags: '-r, --routerDir <routerDir>',
+            description: 'specify the less paths'
+        }
+    ],
     check: function(cmd) {
         return cmd.port && cmd.routerDir;
     },
@@ -28,23 +30,26 @@ var Task = Base.extend({
         var path = require('path');
         var fs = require('fs');
 
-        this.prompt([{
-            type: 'input',
-            name: 'port',
-            message: 'Port the simualtor would listen on',
-            default: _this.get('simulatorPort', 3000),
-            validate: function(pass) {
-                return isInt(pass);
+        this.prompt([
+            {
+                type: 'input',
+                name: 'port',
+                message: 'Port the simualtor would listen on',
+                default: _this.get('simulatorPort', 3000),
+                validate: function(pass) {
+                    return isInt(pass);
+                }
+            },
+            {
+                type: 'input',
+                name: 'routerDir',
+                message: 'Specify the routerDir',
+                default: _this.get('simulatorRouterDir', './routers'),
+                validate: function(pass) {
+                    return fs.existsSync(path.resolve('.', pass)) ? true : 'routerDir must exist';
+                }
             }
-        }, {
-            type: 'input',
-            name: 'routerDir',
-            message: 'Specify the routerDir',
-            default: _this.get('simulatorRouterDir', './routers'),
-            validate: function(pass) {
-                return fs.existsSync(path.resolve('.', pass)) ? true : 'routerDir must exist';
-            }
-        }], function(answer) {
+        ], function(answer) {
 
             _this.action(answer, cons);
 

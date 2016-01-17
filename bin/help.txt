@@ -1,14 +1,14 @@
-{yellow}{bold}Usage: {/bold}{/yellow}
-  
-    1. Select one task by navigating with {green}KEY_UP{/green}/{green}KEY_DOWN{/green} or {green}j{/green}/{green}k{/green}
-    2. Hint {green}{bold}ENTER{/bold}{/green} to execute the selected task
-  
+## Usage:
 
-{yellow}{bold}Having trouble with a task?{/bold}{/yellow}
-    You can register {bold}issues{/bold} at:
-        {magenta}https://github.com/leftstick/Sero-cli/issues{/magenta}
+* Select one task by navigating with `KEY_UP`/`KEY_DOWN` or `j`/`k`
+* Hint `ENTER` to execute the selected task
 
-{yellow}{bold}Found a bug or just want to contribute?{/bold}{/yellow}
+
+Having trouble with a task?
+    You can register issues at:
+        https://github.com/leftstick/Sero-cli/issues
+
+Found a bug or just want to contribute?
     The official repository is:
-        {magenta}https://github.com/leftstick/Sero-cli{/magenta}
+        https://github.com/leftstick/Sero-cli
     Feel free to issue a bug or create a pull request.

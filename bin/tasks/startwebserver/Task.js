@@ -30,7 +30,6 @@ var compileLess = function(lessPath, dest, paths) {
 var Task = Base.extend({
     id: 'StartWebServer',
     name: 'Start a static web server for current working directory',
-    position: 2,
     command: 'server',
     options: [
         {
