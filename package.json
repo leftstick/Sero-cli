@@ -1,7 +1,7 @@
 {
   "name": "sero-cli",
   "description": "The toolkit helps developers easily start with web development work",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "homepage": "https://github.com/leftstick/Sero-cli",
   "repository": {
     "type": "git",
@@ -26,23 +26,24 @@
     "sero": "./bin/Sero.js"
   },
   "dependencies": {
+    "browser-sync": "^2.11.1",
     "commander": "^2.9.0",
-    "cross-spawn": "^2.1.4",
-    "gulp": "^3.9.0",
+    "connect-history-api-fallback": "^1.1.0",
+    "cross-spawn": "^2.1.5",
+    "gulp": "^3.9.1",
     "gulp-less": "^3.0.5",
-    "gulp-plumber": "^1.0.1",
-    "gulp-webserver": "^0.9.1",
+    "gulp-plumber": "^1.1.0",
     "less-plugin-autoprefix": "^1.5.1",
     "less-plugin-clean-css": "^1.5.1",
-    "lodash": "^4.0.0",
-    "request": "^2.67.0",
-    "rimraf": "^2.5.0",
+    "lodash": "^4.5.0",
+    "request": "^2.69.0",
+    "rimraf": "^2.5.2",
     "terminal-task-runner": "^1.6.0",
     "update-notifier": "^0.6.0",
     "webservice-simulator": "^1.5.3"
   },
   "devDependencies": {
-    "mocha": "^2.3.4"
+    "mocha": "^2.4.5"
   },
   "scripts": {
     "test": "mocha --reporter nyan"
