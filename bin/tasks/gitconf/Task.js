@@ -24,7 +24,7 @@ var configs = [
     'git config --local alias.cp cherry-pick',
     'git config --local alias.df diff',
     'git config --local alias.lo log --oneline',
-    'git config --local alias.pr pull --rebase',
+    'git config --local alias.pr "pull --rebase"',
     'git config --local alias.pl pull',
     'git config --local alias.ps push'
 ];
