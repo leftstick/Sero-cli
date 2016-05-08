@@ -2,11 +2,9 @@
 
 
 
-- specify `root` directory of the webserver. `.` by default
 - specify `port` number for the webserver. `8080` by default
 - specify `paths` for less parser if `less` folder exist under `root`
 - choose to enable `html5 push state mode`. `enable` by default
-- choose to enable `livereload`. `enable` by default
 
 
 > only one `less` file `<root>/less/main.less` will be compiled into `<root>/css/`
@@ -17,5 +15,5 @@
 
 
 ```powershell
-sero server -r <root> -p <port> -le [less paths] [-l] [-ps]
+sero server -p <port> -l [less paths] [-h]
 ```
