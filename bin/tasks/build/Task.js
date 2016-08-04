@@ -39,7 +39,7 @@ var Task = Base.extend({
         var buildPath = 'build';
         var buildJsonPath = path.resolve(process.cwd(), 'js', 'build.js');
         if (!fs.existsSync(buildJsonPath)) {
-            cons('js/build.json doesn\'t exist');
+            cons('js/build.js doesn\'t exist');
             process.exit(1);
         }
 
