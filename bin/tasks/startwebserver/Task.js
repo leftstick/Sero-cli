@@ -17,7 +17,7 @@ var compileLess = function(lessPath, dest, paths) {
     var LessPluginAutoPrefix = require('less-plugin-autoprefix');
     var autoprefix = new LessPluginAutoPrefix({
         browsers: [
-            'last 10 versions'
+            'last 5 versions'
         ],
         cascade: true
     });
