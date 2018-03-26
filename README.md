@@ -10,6 +10,12 @@ Sero-cli
 > The web application development toolkit
 
 
+
+# the repo is not maintained anymore, please refer to other alternatives, Thanks #
+
+
+
+
 ![](https://raw.githubusercontent.com/leftstick/Sero-cli/master/docs/img/example.png)
 
 Sero-cli provides a friendly interactive interface to help developers start developing web application on `Github`. All you need to do is pressing [KEY_UP]/[KEY_DOWN] to navigate the specific task you'd like to execute.
